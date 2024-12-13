@@ -1,0 +1,50 @@
+:root {
+    --color-1: #353535;
+    --color-2: #F9D67B;
+    --color-3: #FCFAF1;
+    --color-4: #707070;
+}
+
+h1 {
+    font-size: 60px;
+    color: var(--color-4);
+    text-shadow: 
+    3px 5px 2px var(--color-3), /* Primera sombra */
+    -3px -5px 2px var(--color-3); /* Segunda sombra */
+    margin: 0px;
+    padding: 60px;
+}
+
+body {
+    margin: 0;
+    background-color: rgb(35, 35, 35);
+    font-family: 'Inknut Antiqua', serif;
+}
+
+.point {
+    position: absolute;
+    color: rgb(249, 214, 123);
+    font-size: 128px;
+    /* Tamaño del punto */
+    line-height: 1;
+}
+
+.box {
+    position: relative;
+    background-image: url('../img/nube.svg');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Inknut Antiqua', serif;
+    color: rgb(249, 214, 123);
+
+    z-index: 1;
+}
+
+.dot-container {
+    z-index: -1;
+}
