@@ -4,12 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!--<title>Patrón de Puntos</title>-->
-  <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <div class="box"><h1>holaaaa</h1></div>
+    <div class="box box--title">
+        <h1>meowrhino</h1>
+    </div>
+
+    <div class="box box--palette">
+        <h2>change palette</h2> 
+        <div>
+          <button onclick="applyPalette('')">monochrome</button>
+          <button onclick="applyPalette('burnt')">burnt</button>
+            <button onclick="applyPalette('original')">original</button>
+            <button onclick="applyPalette('archive')">archive</button>
+            <button onclick="applyPalette('tfg')">tfg</button>
+          </div>
+    </div>
     <div class="dot-container" id="dot-container"></div>
   <script src="script/polkadotsbg.js"></script>
+  <script src="script/changepalette.js"></script>
+  <script src="script/adjustBoxSizes.js"></script>
 </body>
 </html>
