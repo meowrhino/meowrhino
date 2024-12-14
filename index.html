@@ -12,7 +12,7 @@
 </head>
 
 <body>
-  <div class="pre-box box--title">
+  <div class="pre-box">
     <div class="box box--title">
       <h1>meowrhino</h1>
     </div>
@@ -21,27 +21,20 @@
 
   <div class="pre-box box--palette">
     <div class="box box--palette">
-      <button onclick="applyPalette('')">monochrome</button>
-      <button onclick="applyPalette('burnt')">burnt</button>
-      <button onclick="applyPalette('original')">original</button>
-      <button onclick="applyPalette('archive')">archive</button>
-      <button onclick="applyPalette('tfg')">tfg</button>
+      <span class="popup-trigger"><h4>open fun</h4></span>
     </div>
   </div>
 
 
-
-  <button class="popup-trigger">open popup</button>
-
   <div class="popup">
       <div class="pre-box">
           <div class="box">
-              <span class="close-popup">close popup</span>
-              <button onclick="applyPalette('')">monochrome</button>
-              <button onclick="applyPalette('burnt')">burnt</button>
-              <button onclick="applyPalette('original')">original</button>
-              <button onclick="applyPalette('archive')">archive</button>
-              <button onclick="applyPalette('tfg')">tfg</button>
+              <span class="close-popup"><h4>close fun</h4></span>
+              <button class="palette-btn" onclick="applyPalette('burnt')">burnt</button>
+              <button class="palette-btn" onclick="applyPalette('')">monochrome</button>
+              <button class="palette-btn" onclick="applyPalette('original')">original</button>
+              <button class="palette-btn" onclick="applyPalette('archive')">archive</button>
+              <button class="palette-btn" onclick="applyPalette('tfg')">tfg</button>
           </div>
       </div>
   </div>
