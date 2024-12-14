@@ -21,23 +21,45 @@
 
   <div class="pre-box box--palette">
     <div class="box box--palette">
-        <button onclick="applyPalette('')">monochrome</button>
-        <button onclick="applyPalette('burnt')">burnt</button>
-        <button onclick="applyPalette('original')">original</button>
-        <button onclick="applyPalette('archive')">archive</button>
-        <button onclick="applyPalette('tfg')">tfg</button>
+      <button onclick="applyPalette('')">monochrome</button>
+      <button onclick="applyPalette('burnt')">burnt</button>
+      <button onclick="applyPalette('original')">original</button>
+      <button onclick="applyPalette('archive')">archive</button>
+      <button onclick="applyPalette('tfg')">tfg</button>
     </div>
   </div>
+
+
+
+  <button class="popup-trigger">open popup</button>
+
+  <div class="popup">
+      <div class="pre-box">
+          <div class="box">
+              <span class="close-popup">close popup</span>
+              <button onclick="applyPalette('')">monochrome</button>
+              <button onclick="applyPalette('burnt')">burnt</button>
+              <button onclick="applyPalette('original')">original</button>
+              <button onclick="applyPalette('archive')">archive</button>
+              <button onclick="applyPalette('tfg')">tfg</button>
+          </div>
+      </div>
+  </div>
+
+
 
   <div class="dot-container" id="dot-container"></div>
 
   <script>
-    function togglePalette() {
-    const popup = document.querySelector('.palette-popup');
-    popup.classList.toggle('active');
-}
+    document.querySelector('.popup-trigger').addEventListener('click', () => {
+        document.querySelector('.popup').classList.add('active');
+    });
+    
+    document.querySelector('.close-popup').addEventListener('click', () => {
+        document.querySelector('.popup').classList.remove('active');
+    });
   </script>
-  
+
   <script src="script/polkadotsbg.js"></script>
   <script src="script/changepalette.js"></script>
   <script src="script/adjustBoxSizes.js"></script>
