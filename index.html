@@ -21,18 +21,23 @@
 
   <div class="pre-box box--palette">
     <div class="box box--palette">
-      <h2>change palette</h2>
-      <div>
         <button onclick="applyPalette('')">monochrome</button>
         <button onclick="applyPalette('burnt')">burnt</button>
         <button onclick="applyPalette('original')">original</button>
         <button onclick="applyPalette('archive')">archive</button>
         <button onclick="applyPalette('tfg')">tfg</button>
-      </div>
     </div>
   </div>
 
   <div class="dot-container" id="dot-container"></div>
+
+  <script>
+    function togglePalette() {
+    const popup = document.querySelector('.palette-popup');
+    popup.classList.toggle('active');
+}
+  </script>
+  
   <script src="script/polkadotsbg.js"></script>
   <script src="script/changepalette.js"></script>
   <script src="script/adjustBoxSizes.js"></script>
