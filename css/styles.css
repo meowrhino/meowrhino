@@ -520,7 +520,7 @@ body {
 
 .color-rect {
     position: relative;
-    width: 20%;
+    width: 10%;
     aspect-ratio: 1;
     cursor: pointer;
     border-radius: 8px;

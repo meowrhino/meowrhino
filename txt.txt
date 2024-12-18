@@ -1,2 +1,3 @@
 cosas que faltan:
-la sombra detrás de la pre-box
+las sombras detrás de la pre-box
+responsive de lo que tienes
