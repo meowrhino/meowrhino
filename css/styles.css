@@ -326,6 +326,7 @@ h1 {
     letter-spacing: -4px;
 }
 
+
 h2 {
     color: var(--color-4);
     text-shadow:
@@ -362,15 +363,20 @@ h4 {
     letter-spacing: -2.5px;
 }
 
+.container {
+    height: 100vh;
+}
+
+.container--title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 body {
     margin: 0;
     background-color: var(--color-1);
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    height: 300vh;
 }
 
 .point {
@@ -418,10 +424,58 @@ body {
     z-index: -1;
 }
 
+/*
+ideas para sombra en pre-box
+.box-shadow {
+    width: 200px;
+    height: 200px;
+    background-color: var(--color-1);
+    clip-path: var(--nube);
+
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .container > * {
+    text-shadow: 20px 2px 5px rgba(0, 0, 0, 1);
+}
+
+  */
 .box--title {
     width: 30vw;
     text-align: center;
 }
+
+@media (max-width: 600px) {
+
+    .pre-box::before {
+        width: 100%;
+        height: 100%;
+    }
+
+    .box--title, .box--palette {
+        width: 90%;
+    }
+}
+
+.box--palette {
+    width: 90%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Responsive popup */
+.popup .pre-box {
+    width: 80%;
+    max-width: 600px;
+}
+
+.popup .box {
+    width: 100%;
+    padding: 2%;
+}
+
 
 .pre-box.box--palette {
     position: fixed;
@@ -447,7 +501,7 @@ body {
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: 300vh;
     z-index: -1;
     pointer-events: none;
     /* This prevents the background from interfering with foreground interactions */
