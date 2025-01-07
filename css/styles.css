@@ -306,12 +306,14 @@ h1,
 h1,
 h2,
 h3,
-h4 {
+h4, 
+h5 {
     margin: 0;
     padding: 0;
     font-weight: 400;
     font-family: "Inknut Antiqua", serif;
     text-align: center;
+    line-height: 120%;
 }
 
 h1 {
@@ -368,6 +370,18 @@ h4 {
     font-size: 24px;
 
     letter-spacing: -2.5px;
+}
+
+h5 {
+    color: var(--color-4);
+    text-shadow:
+        1px 2px 1px var(--color-3),
+        /* Primera sombra */
+        -1px -2px 1px var(--color-3);
+    /* Segunda sombra */
+    font-size: 16px;
+
+    letter-spacing: -2px;
 }
 
 .container {
