@@ -8,10 +8,19 @@ const items = [
 // Contenedor principal donde se agregarán los elementos
 const container = document.querySelector('.container--content');
 
-// Genera un factor aleatorio entre 0.5 y 1.5
 function getRandomFactor() {
+    // Media query para detectar pantallas pequeñas (móvil)
+    const isMobile = window.matchMedia("(max-width: 600px)").matches;
+
+    // Si es móvil, devolver un factor más pequeño
+    if (isMobile) {
+        return 0.6 + Math.random() * 1.0; // Rango más pequeño
+    }
+
+    // Si no, usar el rango más amplio
     return 0.85 + Math.random() * 1.2;
 }
+
 
 // Crea dinámicamente un elemento con tamaño aleatorio
 function createElement(name, link) {
