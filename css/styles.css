@@ -375,9 +375,9 @@ h4 {
 h5 {
     color: var(--color-4);
     text-shadow:
-        1px 2px 1px var(--color-3),
+        0.3px 0.6px 0.3px var(--color-3),
         /* Primera sombra */
-        -1px -2px 1px var(--color-3);
+        -0.3px -0.6px 0.3px var(--color-3);
     /* Segunda sombra */
     font-size: 16px;
 
@@ -403,6 +403,8 @@ h5 a {
 .container--content {
     display: flex;
     position: relative;
+    height: 300vh !important;
+
 }
 
 body {

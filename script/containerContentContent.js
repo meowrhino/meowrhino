@@ -1,8 +1,29 @@
 // Array con nombres y links
 const items = [
-    { name: "Primer archivo 1", link: "#" },
-    { name: "Primer archivo 2", link: "#" },
-    { name: "Primer archivo 3", link: "#" },
+    { name: "notas3", link: "https://meowrhino.github.io/notas3/" },
+    { name: "joc de la vida", link: "https://meowrhino.github.io/gameOfLife/" },
+    { name: "archive", link: "https://meowrhino.neocities.org/" },
+    { name: "masajes", link: "https://meowrhino.github.io/rikamichie/" },
+    { name: "tarifas", link: "https://meowrhino.github.io/tarifas/" },
+    { name: "notas2", link: "https://meowrhino.github.io/notas2/" },
+    { name: "las xordxs", link: "https://meowrhino.github.io/jordiyordiyordyiordi/" },
+    { name: "e3000", link: "https://meowrhino.github.io/e300/" },
+    { name: "villa granota", link: "https://villagranota.github.io/villagranota/" },
+    { name: "minesweeper", link: "https://meowrhino.github.io/etchASketch/" },
+    { name: "freewrite", link: "https://meowrhino.github.io/writingapp/" },
+    { name: "directorio cosas nuevas", link: "https://meowrhino.github.io/directorio/" },
+    { name: "hopeko", link: "https://meowrhino.github.io/hopeko/" },
+    { name: "hopeko2", link: "https://meowrhino.github.io/hopeko2/" },
+    { name: "notas", link: "https://meowrhino.github.io/notas/" },
+    { name: "barcelona per eixample", link: "barcelona.html" },
+    { name: "profilePics", link: "https://meowrhino.github.io/profilePics/" },
+    { name: "rockPaperScissors", link: "https://meowrhino.github.io/rockPaperScissors/" },
+    { name: "festa", link: "lafesta_old.html" },
+    { name: "festa (version + gran)", link: "lafesta.html" },
+    { name: "TFG", link: "https://meowrhino.cargo.site/tfg" },
+    { name: "la torra manel I", link: "https://www.indiexpo.net/es/games/la-torra-manel" },
+    { name: "la torra manel II", link: "https://www.indiexpo.net/es/games/la-2a-torre-manel" },
+    { name: "la torra manel III", link: "https://www.indiexpo.net/es/games/la-3era-torra-manel-2" },
 ];
 
 // Contenedor principal
@@ -113,7 +134,7 @@ function detectZoomOrScroll() {
         }
     }, 200);
 
-    // Detectar scroll (solo posiciones)
+    // Detectar scroll (solo posiciones con throttle)
     window.addEventListener('scroll', throttle(updatePositions, 200));
 }
 
@@ -132,9 +153,7 @@ function throttle(func, limit) {
 }
 
 // Eventos
-window.addEventListener('resize', () => {
-    updateElements();
-});
+window.addEventListener('resize', throttle(updateElements, 200));
 
 document.addEventListener('DOMContentLoaded', () => {
     // Crear elementos adicionales si deseas
