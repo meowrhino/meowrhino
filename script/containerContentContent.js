@@ -1,37 +1,29 @@
-// Array con nombres y links
 const items = [
     { name: "Primer archivo 1", link: "#" },
     { name: "Primer archivo 2", link: "#" },
     { name: "Primer archivo 3", link: "#" },
 ];
 
-// Contenedor principal donde se agregarán los elementos
+// Contenedor principal
 const container = document.querySelector('.container--content');
 
+// Factor aleatorio
 function getRandomFactor() {
-    // Media query para detectar pantallas pequeñas (móvil)
     const isMobile = window.matchMedia("(max-width: 600px)").matches;
-
-    // Si es móvil, devolver un factor más pequeño
     if (isMobile) {
-        return 0.6 + Math.random() * 1.0; // Rango más pequeño
+        return 0.6 + Math.random() * 1.0;
     }
-
-    // Si no, usar el rango más amplio
     return 0.85 + Math.random() * 1.2;
 }
 
-
-// Crea dinámicamente un elemento con tamaño aleatorio
+// Crear elemento dinámico
 function createElement(name, link) {
-    // Crear los divs
     const preBox = document.createElement('div');
     preBox.classList.add('pre-box');
-    
+
     const box = document.createElement('div');
     box.classList.add('box', 'box--title');
 
-    // Añadir el texto y el link
     const h5 = document.createElement('h5');
     const linkElement = document.createElement('a');
     linkElement.href = link;
@@ -39,59 +31,114 @@ function createElement(name, link) {
     h5.appendChild(linkElement);
     box.appendChild(h5);
 
-    // Añadir la caja al pre-box
     box.style.height = 'inherit';
     box.style.width = 'inherit';
     preBox.appendChild(box);
 
-    // Calcular tamaño aleatorio
     const randomFactor = getRandomFactor();
-    const baseWidth = 200; // Tamaño base de referencia en píxeles
+    const baseWidth = 200;
     const newWidth = baseWidth * randomFactor;
-    const newHeight = newWidth / 1.55; // Aspect ratio de 1.55
-
+    const newHeight = newWidth / 1.55;
     preBox.style.width = `${newWidth}px`;
     preBox.style.height = `${newHeight}px`;
 
-    // Añadir al contenedor
     container.appendChild(preBox);
 }
 
-// Generar todos los elementos dinámicamente
-items.forEach(item => {
-    createElement(item.name, item.link);
-});
+// Generar elementos inicialmente
+items.forEach(item => createElement(item.name, item.link));
 
-// Función para actualizar las posiciones y tamaños de los elementos en container--content
+// Recalcula tamaños y posiciones
 function updateElements() {
     const elements = container.querySelectorAll('.pre-box');
     const containerWidth = container.offsetWidth;
     const containerHeight = container.offsetHeight;
 
     elements.forEach(element => {
-        // Calcular tamaño aleatorio
+        // Tamaño aleatorio
         const randomFactor = getRandomFactor();
         const baseWidth = 200;
         const newWidth = baseWidth * randomFactor;
         const newHeight = newWidth / 1.55;
-
         element.style.width = `${newWidth}px`;
         element.style.height = `${newHeight}px`;
 
-        // Recalcular posición aleatoria
+        // Posición aleatoria
         const elementWidth = element.offsetWidth;
         const elementHeight = element.offsetHeight;
         const x = Math.floor(Math.random() * (containerWidth - elementWidth));
         const y = Math.floor(Math.random() * (containerHeight - elementHeight));
-
         element.style.left = `${x}px`;
         element.style.top = `${y}px`;
         element.style.position = 'absolute';
     });
 }
 
-// Llamar a updateElements en el evento resize
-window.addEventListener('resize', updateElements);
+// Solo recalcula posiciones sin cambiar tamaño
+function updatePositions() {
+    const elements = container.querySelectorAll('.pre-box');
+    const containerWidth = container.offsetWidth;
+    const containerHeight = container.offsetHeight;
+
+    elements.forEach(element => {
+        const elementWidth = element.offsetWidth;
+        const elementHeight = element.offsetHeight;
+        const x = Math.floor(Math.random() * (containerWidth - elementWidth));
+        const y = Math.floor(Math.random() * (containerHeight - elementHeight));
+        element.style.left = `${x}px`;
+        element.style.top = `${y}px`;
+    });
+}
+
+// Detectar zoom y scroll
+function detectZoomOrScroll() {
+    let lastZoom = window.devicePixelRatio;
+    let lastContainerWidth = container.offsetWidth;
+    let lastContainerHeight = container.offsetHeight;
+
+    // Detectar zoom
+    setInterval(() => {
+        if (window.devicePixelRatio !== lastZoom) {
+            lastZoom = window.devicePixelRatio;
+            // Actualizar solo si cambian las dimensiones del contenedor
+            if (
+                container.offsetWidth !== lastContainerWidth ||
+                container.offsetHeight !== lastContainerHeight
+            ) {
+                lastContainerWidth = container.offsetWidth;
+                lastContainerHeight = container.offsetHeight;
+                updateElements();
+            }
+        }
+    }, 200);
+
+    // Detectar scroll (solo posiciones)
+    window.addEventListener('scroll', () => {
+        updatePositions();
+    });
+}
+
+// Eventos
+window.addEventListener('resize', () => {
+    updateElements();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Crear elementos adicionales si deseas
+    updateElements();
+    detectZoomOrScroll();
+});
+
+/*
+// Aplicar posiciones y tamaños iniciales al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+    items.forEach(item => {
+        createElement(item.name, item.link);
+    });
+    updateElements(); // Aplicar posiciones y tamaños inicialmente
+    detectZoomOrScroll(); // Detectar zoom o scroll
+});
+*/
 
 
 /*
