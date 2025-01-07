@@ -306,7 +306,7 @@ h1,
 h1,
 h2,
 h3,
-h4, 
+h4,
 h5 {
     margin: 0;
     padding: 0;
@@ -331,8 +331,10 @@ h1 {
 /* Media query for mobile devices */
 @media (max-width: 600px) {
     h1 {
-        font-size: 32px; /* Same size as h3 */
-        letter-spacing: -3px; /* Adjust letter-spacing to match h3 */
+        font-size: 32px;
+        /* Same size as h3 */
+        letter-spacing: -3px;
+        /* Adjust letter-spacing to match h3 */
     }
 }
 
@@ -384,10 +386,15 @@ h5 {
     letter-spacing: -2px;
 }
 
-h5 a {
+a {
     cursor: pointer;
     color: var(--color-4);
     text-decoration: none;
+    text-shadow:
+        0.3px 0.6px 0.3px var(--color-1),
+        /* Primera sombra */
+        -0.3px -0.6px 0.3px var(--color-1);
+        /* Segunda sombra */
 }
 
 .container {
@@ -410,7 +417,7 @@ h5 a {
 body {
     margin: 0;
     background-color: var(--color-1);
-    height: 300vh;
+    height: 500vh;
 }
 
 .point {
@@ -539,7 +546,7 @@ ideas para sombra en pre-box
     top: 0;
     left: 0;
     width: 100vw;
-    height: 300vh;
+    height: 500vh;
     z-index: -1;
     pointer-events: none;
     /* This prevents the background from interfering with foreground interactions */
@@ -652,4 +659,14 @@ ideas para sombra en pre-box
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+div.flex-column p {
+    margin: 0;
+    display: flex;
+    gap: 5px;
 }

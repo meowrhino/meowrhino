@@ -1,82 +1,190 @@
-// Array con nombres y links
-const items = [
-    { name: "notas3", link: "https://meowrhino.github.io/notas3/" },
-    { name: "joc de la vida", link: "https://meowrhino.github.io/gameOfLife/" },
-    { name: "archive", link: "https://meowrhino.neocities.org/" },
-    { name: "masajes", link: "https://meowrhino.github.io/rikamichie/" },
-    { name: "tarifas", link: "https://meowrhino.github.io/tarifas/" },
-    { name: "notas2", link: "https://meowrhino.github.io/notas2/" },
-    { name: "las xordxs", link: "https://meowrhino.github.io/jordiyordiyordyiordi/" },
-    { name: "e3000", link: "https://meowrhino.github.io/e300/" },
-    { name: "villa granota", link: "https://villagranota.github.io/villagranota/" },
-    { name: "minesweeper", link: "https://meowrhino.github.io/etchASketch/" },
-    { name: "freewrite", link: "https://meowrhino.github.io/writingapp/" },
-    { name: "directorio cosas nuevas", link: "https://meowrhino.github.io/directorio/" },
-    { name: "hopeko", link: "https://meowrhino.github.io/hopeko/" },
-    { name: "hopeko2", link: "https://meowrhino.github.io/hopeko2/" },
-    { name: "notas", link: "https://meowrhino.github.io/notas/" },
-    { name: "barcelona per eixample", link: "barcelona.html" },
-    { name: "profilePics", link: "https://meowrhino.github.io/profilePics/" },
-    { name: "rockPaperScissors", link: "https://meowrhino.github.io/rockPaperScissors/" },
-    { name: "festa", link: "lafesta_old.html" },
-    { name: "festa (version + gran)", link: "lafesta.html" },
-    { name: "TFG", link: "https://meowrhino.cargo.site/tfg" },
-    { name: "la torra manel I", link: "https://www.indiexpo.net/es/games/la-torra-manel" },
-    { name: "la torra manel II", link: "https://www.indiexpo.net/es/games/la-2a-torre-manel" },
-    { name: "la torra manel III", link: "https://www.indiexpo.net/es/games/la-3era-torra-manel-2" },
-];
+// Array con nombres y links en un array (links)
+    const items = [
+      { 
+        name: "joc de la vida", 
+        links: ["https://meowrhino.github.io/gameOfLife/"]
+      },
+      { 
+        name: "archive", 
+        links: ["https://meowrhino.neocities.org/"]
+      },
+      { 
+        name: "masajes", 
+        links: ["https://meowrhino.github.io/rikamichie/"]
+      },
+      { 
+        name: "tarifas", 
+        links: ["https://meowrhino.github.io/tarifas/"]
+      },
+      { 
+        name: "las xordxs", 
+        links: ["https://meowrhino.github.io/jordiyordiyordyiordi/"]
+      },
+      { 
+        name: "e3000", 
+        links: ["https://meowrhino.github.io/e300/"]
+      },
+      { 
+        name: "villa granota", 
+        links: ["https://villagranota.github.io/villagranota/"]
+      },
+      { 
+        name: "minesweeper", 
+        links: ["https://meowrhino.github.io/etchASketch/"]
+      },
+      { 
+        name: "freewrite", 
+        links: ["https://meowrhino.github.io/writingapp/"]
+      },
+      { 
+        name: "directorio cosas nuevas", 
+        links: ["https://meowrhino.github.io/directorio/"]
+      },
+      { 
+        name: "hopeko", 
+        links: [
+          "https://meowrhino.github.io/hopeko/",
+          "https://meowrhino.github.io/hopeko2/"
+        ]
+      },
+      { 
+        name: "notas", 
+        links: [
+          "https://meowrhino.github.io/notas/",
+          "https://meowrhino.github.io/notas2/",
+          "https://meowrhino.github.io/notas3/"
+        ]
+      },
+      { 
+        name: "barcelona per eixample", 
+        links: ["barcelona.html"]
+      },
+      { 
+        name: "profilePics", 
+        links: ["https://meowrhino.github.io/profilePics/"]
+      },
+      { 
+        name: "rockPaperScissors", 
+        links: ["https://meowrhino.github.io/rockPaperScissors/"]
+      },
+      { 
+        name: "festa", 
+        links: [
+          "https://meowrhino.neocities.org/lafesta_old.html",
+          "https://meowrhino.neocities.org/lafesta.html"
+        ]
+      },
+      { 
+        name: "TFG", 
+        links: ["https://meowrhino.cargo.site/tfg"]
+      },
+      {
+        name: "la torra manel",
+        links: [
+          "https://www.indiexpo.net/es/games/la-torra-manel",
+          "https://www.indiexpo.net/es/games/la-2a-torre-manel",
+          "https://www.indiexpo.net/es/games/la-3era-torra-manel-2"
+        ]
+      },
+    ];
 
-// Contenedor principal
-const container = document.querySelector('.container--content');
+    // Contenedor principal
+    const container = document.querySelector('.container--content');
 
-// Factor aleatorio
-function getRandomFactor() {
-    const isMobile = window.matchMedia("(max-width: 600px)").matches;
-    if (isMobile) {
-        return 0.6 + Math.random() * 1.0;
+    // Factor aleatorio
+    function getRandomFactor() {
+      const isMobile = window.matchMedia("(max-width: 600px)").matches;
+      if (isMobile) {
+          return 0.65 + Math.random() * 1.0;
+      }
+      return 0.85 + Math.random() * 1.2;
     }
-    return 0.85 + Math.random() * 1.2;
-}
 
-// Crear elemento dinámico
-function createElement(name, link) {
-    const preBox = document.createElement('div');
-    preBox.classList.add('pre-box');
+    /**
+     * Devuelve un "indicador" en pseudo-números romanos:
+     */
+    function getRomanIndex(num) {
+      switch (num) {
+          case 1: return "i";
+          case 2: return "ii";
+          case 3: return "iii"; 
+          case 4: return "iv";   
+          case 5: return "v";     
+          default: return num;    
+      }
+    }
 
-    const box = document.createElement('div');
-    box.classList.add('box', 'box--title');
+    // Crear elemento dinámico (adaptado para single/múltiples enlaces)
+    function createElement(item) {
+      const preBox = document.createElement('div');
+      preBox.classList.add('pre-box');
 
-    const h5 = document.createElement('h5');
-    const linkElement = document.createElement('a');
-    linkElement.href = link;
-    linkElement.textContent = name;
-    h5.appendChild(linkElement);
-    box.appendChild(h5);
+      const box = document.createElement('div');
+      box.classList.add('box', 'box--title');
 
-    box.style.height = 'inherit';
-    box.style.width = 'inherit';
-    preBox.appendChild(box);
+      // 1) Comprobamos si hay varios enlaces o solo uno
+      const linksArray = item.links || [];
+      if (linksArray.length <= 1) {
+          // ---- SOLO UN ENLACE ----
+          const h5 = document.createElement('h5');
+          const linkElement = document.createElement('a');
+          linkElement.href = linksArray[0] || "#";
+          linkElement.textContent = item.name;
+          linkElement.target = "_blank";
+          h5.appendChild(linkElement);
+          box.appendChild(h5);
 
-    const randomFactor = getRandomFactor();
-    const baseWidth = 200;
-    const newWidth = baseWidth * randomFactor;
-    const newHeight = newWidth / 1.55;
-    preBox.style.width = `${newWidth}px`;
-    preBox.style.height = `${newHeight}px`;
+      } else {
+          // ---- VARIOS ENLACES ----
+          // Creamos el h4 con el nombre
+          const h4 = document.createElement('h4');
+          box.classList.add('flex-column');
+          
+          h4.textContent = item.name;
+          box.appendChild(h4);
+          
 
-    container.appendChild(preBox);
-}
+          // Debajo, un <p> con spans para cada enlace
+          const p = document.createElement('p');
+          linksArray.forEach((link, index) => {
+              const span = document.createElement('span');
+              const a = document.createElement('a');
+              a.target = "_blank";
+              a.href = link;
+              // index comienza en 0, así que para getRomanIndex lo pasamos como (index+1)
+              a.textContent = getRomanIndex(index + 1);
+              span.appendChild(a);
+              p.appendChild(span);
+          });
+          box.appendChild(p);
+      }
 
-// Generar elementos inicialmente
-items.forEach(item => createElement(item.name, item.link));
+      // Ajustes de estilo y dimensiones
+      box.style.height = 'inherit';
+      box.style.width = 'inherit';
+      preBox.appendChild(box);
 
-// Recalcula tamaños y posiciones
-function updateElements() {
-    const elements = container.querySelectorAll('.pre-box');
-    const containerWidth = container.offsetWidth;
-    const containerHeight = container.offsetHeight;
+      // Aplicar un tamaño aleatorio
+      const randomFactor = getRandomFactor();
+      const baseWidth = 200;
+      const newWidth = baseWidth * randomFactor;
+      const newHeight = newWidth / 1.55;
+      preBox.style.width = `${newWidth}px`;
+      preBox.style.height = `${newHeight}px`;
 
-    elements.forEach(element => {
+      container.appendChild(preBox);
+    }
+
+    // Generar elementos inicialmente
+    items.forEach(item => createElement(item));
+
+    // Recalcula tamaños y posiciones
+    function updateElements() {
+      const elements = container.querySelectorAll('.pre-box');
+      const containerWidth = container.offsetWidth;
+      const containerHeight = container.offsetHeight;
+
+      elements.forEach(element => {
         // Tamaño aleatorio
         const randomFactor = getRandomFactor();
         const baseWidth = 200;
@@ -93,73 +201,72 @@ function updateElements() {
         element.style.left = `${x}px`;
         element.style.top = `${y}px`;
         element.style.position = 'absolute';
-    });
-}
+      });
+    }
 
-// Solo recalcula posiciones sin cambiar tamaño
-function updatePositions() {
-    const elements = container.querySelectorAll('.pre-box');
-    const containerWidth = container.offsetWidth;
-    const containerHeight = container.offsetHeight;
+    // Solo recalcula posiciones sin cambiar tamaño
+    function updatePositions() {
+      const elements = container.querySelectorAll('.pre-box');
+      const containerWidth = container.offsetWidth;
+      const containerHeight = container.offsetHeight;
 
-    elements.forEach(element => {
+      elements.forEach(element => {
         const elementWidth = element.offsetWidth;
         const elementHeight = element.offsetHeight;
         const x = Math.floor(Math.random() * (containerWidth - elementWidth));
         const y = Math.floor(Math.random() * (containerHeight - elementHeight));
         element.style.left = `${x}px`;
         element.style.top = `${y}px`;
-    });
-}
+      });
+    }
 
-// Detectar zoom y scroll
-function detectZoomOrScroll() {
-    let lastZoom = window.devicePixelRatio;
-    let lastContainerWidth = container.offsetWidth;
-    let lastContainerHeight = container.offsetHeight;
+    // Detectar zoom y scroll
+    function detectZoomOrScroll() {
+      let lastZoom = window.devicePixelRatio;
+      let lastContainerWidth = container.offsetWidth;
+      let lastContainerHeight = container.offsetHeight;
 
-    // Detectar zoom
-    setInterval(() => {
+      // Detectar zoom
+      setInterval(() => {
         if (window.devicePixelRatio !== lastZoom) {
-            lastZoom = window.devicePixelRatio;
-            // Actualizar solo si cambian las dimensiones del contenedor
-            if (
-                container.offsetWidth !== lastContainerWidth ||
-                container.offsetHeight !== lastContainerHeight
-            ) {
-                lastContainerWidth = container.offsetWidth;
-                lastContainerHeight = container.offsetHeight;
-                updateElements();
-            }
+          lastZoom = window.devicePixelRatio;
+          // Actualizar solo si cambian las dimensiones del contenedor
+          if (
+            container.offsetWidth !== lastContainerWidth ||
+            container.offsetHeight !== lastContainerHeight
+          ) {
+            lastContainerWidth = container.offsetWidth;
+            lastContainerHeight = container.offsetHeight;
+            updateElements();
+          }
         }
-    }, 200);
+      }, 200);
 
-    // Detectar scroll (solo posiciones con throttle)
-    window.addEventListener('scroll', throttle(updatePositions, 200));
-}
+      // Detectar scroll (solo posiciones con throttle)
+     /* window.addEventListener('scroll', throttle(updatePositions, 200));*/
+    }
 
-// Limitar frecuencia de ejecución
-function throttle(func, limit) {
-    let inThrottle;
-    return function () {
+    // Limitar frecuencia de ejecución
+    function throttle(func, limit) {
+      let inThrottle;
+      return function () {
         const args = arguments;
         const context = this;
         if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => (inThrottle = false), limit);
+          func.apply(context, args);
+          inThrottle = true;
+          setTimeout(() => (inThrottle = false), limit);
         }
-    };
-}
+      };
+    }
 
-// Eventos
-window.addEventListener('resize', throttle(updateElements, 200));
+    // Eventos
+    window.addEventListener('resize', throttle(updateElements, 200));
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Crear elementos adicionales si deseas
-    updateElements();
-    detectZoomOrScroll();
-});
+    document.addEventListener('DOMContentLoaded', () => {
+      updateElements();  // Ajusta tamaños y posiciones al cargar
+      detectZoomOrScroll();
+    });
 
 /*
 // Aplicar posiciones y tamaños iniciales al cargar la página
