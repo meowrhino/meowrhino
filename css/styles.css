@@ -326,6 +326,13 @@ h1 {
     letter-spacing: -4px;
 }
 
+/* Media query for mobile devices */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 32px; /* Same size as h3 */
+        letter-spacing: -3px; /* Adjust letter-spacing to match h3 */
+    }
+}
 
 h2 {
     color: var(--color-4);
@@ -373,6 +380,11 @@ h4 {
     align-items: center;
 }
 
+.container--content {
+    display: flex;
+    position: relative;
+}
+
 body {
     margin: 0;
     background-color: var(--color-1);
@@ -410,7 +422,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
+    position: absolute;
 }
 
 .pre-box::before {
@@ -418,7 +430,7 @@ body {
     position: absolute;
     background-position: center;
     width: 105%;
-    height: 105%;
+    height: 110%;
     background-color: var(--color-3);
     clip-path: var(--nube);
     z-index: -1;
@@ -473,7 +485,6 @@ ideas para sombra en pre-box
 /* Responsive popup */
 .popup .pre-box {
     width: 80%;
-    max-width: 600px;
 }
 
 .popup .box {

@@ -17,7 +17,7 @@ function adjustBoxSizes() {
         const height = width / aspectRatio;
         prebox.style.height = `${height}px`;
     });
-º
+
     // Popup boxes - using the same aspect ratio
     if (document.querySelector('.popup.active')) {
         popupBoxes.forEach(box => {
