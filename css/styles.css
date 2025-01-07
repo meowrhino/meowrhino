@@ -136,7 +136,7 @@
     --coolCap-color-2: #FADFA1;
     --coolCap-color-3: #FFF4EA;
     --coolCap-color-4: #7EACB5;
-    
+
     /*baby*/
     --baby-color-1: #78B3CE;
     --baby-color-2: #C9E6F0;
@@ -160,14 +160,14 @@
     --fortuneCookie-color-2: #FFF19F;
     --fortuneCookie-color-3: #33372C;
     --fortuneCookie-color-4: #557C56;
-    
+
     /*color*/
     /*raspberry*/
     --raspberry-color-1: #99154E;
     --raspberry-color-2: #FFC93C;
     --raspberry-color-3: #FFDDCC;
     --raspberry-color-4: #DD97A8;
-    
+
     /*dino*/
     --dino-color-1: #071A52;
     --dino-color-2: #086972;
@@ -198,7 +198,7 @@
     --orangeOracle-color-2: #FF6000;
     --orangeOracle-color-3: #FFC859;
     --orangeOracle-color-4: #FFE6C7;
-    
+
     /*coolTheyThem*/
     --coolTheyThem-color-1: #071A52;
     --coolTheyThem-color-2: #086972;
@@ -229,7 +229,7 @@
     --zombie-color-2: #524C42;
     --zombie-color-3: #E2DFD0;
     --zombie-color-4: #95F900;
-    
+
     /*vampire*/
     --vampire-color-1: #1A1919;
     --vampire-color-2: #A04747;
@@ -260,7 +260,7 @@
     --spiderweb-color-2: #52057B;
     --spiderweb-color-3: #892CDC;
     --spiderweb-color-4: #BC6FF1;
-    
+
     /*amphora*/
     --amphora-color-1: #635985;
     --amphora-color-2: #443C68;
@@ -424,6 +424,10 @@ body {
     z-index: -1;
 }
 
+.pre-box--shadow {
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.3)) drop-shadow(-5px -5px 5px rgba(0, 0, 0, 0.3));
+}
+
 /*
 ideas para sombra en pre-box
 .box-shadow {
@@ -452,7 +456,8 @@ ideas para sombra en pre-box
         height: 100%;
     }
 
-    .box--title, .box--palette {
+    .box--title,
+    .box--palette {
         width: 90%;
     }
 }
