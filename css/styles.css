@@ -384,6 +384,12 @@ h5 {
     letter-spacing: -2px;
 }
 
+h5 a {
+    cursor: pointer;
+    color: var(--color-4);
+    text-decoration: none;
+}
+
 .container {
     height: 100vh;
 }
@@ -542,7 +548,6 @@ ideas para sombra en pre-box
 
 .popup-trigger {
     z-index: 1;
-    cursor: pointer;
     top: 100px;
     right: 100px;
     cursor: pointer;

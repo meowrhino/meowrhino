@@ -31,9 +31,12 @@ function createElement(name, link) {
     const box = document.createElement('div');
     box.classList.add('box', 'box--title');
 
-    // Añadir el texto
+    // Añadir el texto y el link
     const h5 = document.createElement('h5');
-    h5.textContent = name;
+    const linkElement = document.createElement('a');
+    linkElement.href = link;
+    linkElement.textContent = name;
+    h5.appendChild(linkElement);
     box.appendChild(h5);
 
     // Añadir la caja al pre-box
@@ -86,6 +89,11 @@ function updateElements() {
         element.style.position = 'absolute';
     });
 }
+
+// Llamar a updateElements en el evento resize
+window.addEventListener('resize', updateElements);
+
+
 /*
 // Detectar zoom o scroll y activar updateElements
 function detectZoomOrScroll() {
@@ -102,9 +110,6 @@ function detectZoomOrScroll() {
     // Detectar scroll
     window.addEventListener('scroll', updateElements);
 }
-
-// Llamar a updateElements en el evento resize
-window.addEventListener('resize', updateElements);
 
 // Aplicar posiciones y tamaños iniciales al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
