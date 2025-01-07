@@ -1,3 +1,4 @@
+// Array con nombres y links
 const items = [
     { name: "Primer archivo 1", link: "#" },
     { name: "Primer archivo 2", link: "#" },
@@ -113,9 +114,21 @@ function detectZoomOrScroll() {
     }, 200);
 
     // Detectar scroll (solo posiciones)
-    window.addEventListener('scroll', () => {
-        updatePositions();
-    });
+    window.addEventListener('scroll', throttle(updatePositions, 200));
+}
+
+// Limitar frecuencia de ejecución
+function throttle(func, limit) {
+    let inThrottle;
+    return function () {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => (inThrottle = false), limit);
+        }
+    };
 }
 
 // Eventos
@@ -139,7 +152,6 @@ document.addEventListener('DOMContentLoaded', () => {
     detectZoomOrScroll(); // Detectar zoom o scroll
 });
 */
-
 
 /*
 // Detectar zoom o scroll y activar updateElements
@@ -166,7 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateElements(); // Aplicar posiciones y tamaños inicialmente
     detectZoomOrScroll(); // Detectar zoom o scroll
 });
-
 */
 
 /*
