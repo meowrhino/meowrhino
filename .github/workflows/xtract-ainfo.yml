@@ -44,10 +44,13 @@ jobs:
               elif el.name == "br":
                   current = None
 
-          items = [{"name": k, "links": v} for k, v in data.items() if v]
+items = [{"name": k, "links": v} for k, v in data.items() if v]
 
-          with open("data/proyectos.json", "w", encoding="utf-8") as f:
-              json.dump(items, f, indent=2, ensure_ascii=False)
+import os
+os.makedirs("data", exist_ok=True)
+
+with open("data/proyectos.json", "w", encoding="utf-8") as f:
+    json.dump(items, f, indent=2, ensure_ascii=False)
           EOF
 
       - name: Haz commit si hay cambios

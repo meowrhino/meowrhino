@@ -81,29 +81,10 @@
       container.appendChild(preBox);
     }
 
-    // Generar elementos inicialmente
-// Generar elementos dinámicamente desde Neocities
-fetch("https://meowrhino.neocities.org/proyectos.json")
-  .then(res => res.text())
-  .then(html => {
-    const doc = new DOMParser().parseFromString(html, "text/html");
-    const ainfos = [...doc.querySelectorAll("ainfo")];
-
-    const items = ainfos.map(ainfo => {
-      const name = ainfo.innerText.trim();
-      const links = [];
-      let next = ainfo.nextSibling;
-
-      while (next && next.nodeName !== "AINFO") {
-        if (next.nodeType === 1 && next.tagName === "A" && next.href) {
-          links.push(next.href);
-        }
-        next = next.nextSibling;
-      }
-
-      return { name, links };
-    });
-
+// Generar elementos dinámicamente desde el JSON en GitHub Pages
+fetch("/data/proyectos.json")
+  .then(res => res.json())
+  .then(items => {
     items.forEach(item => createElement(item));
     updateElements();
     detectZoomOrScroll();
