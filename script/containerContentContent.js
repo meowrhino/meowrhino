@@ -83,7 +83,7 @@
 
     // Generar elementos inicialmente
 // Generar elementos dinámicamente desde Neocities
-fetch("https://meowrhino.neocities.org/")
+fetch("https://meowrhino.neocities.org/proyectos.json")
   .then(res => res.text())
   .then(html => {
     const doc = new DOMParser().parseFromString(html, "text/html");
