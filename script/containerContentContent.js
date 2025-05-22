@@ -1,95 +1,5 @@
-// Array con nombres y links en un array (links)
-    const items = [
-      { 
-        name: "joc de la vida", 
-        links: ["https://meowrhino.github.io/gameOfLife/"]
-      },
-      { 
-        name: "archive", 
-        links: ["https://meowrhino.neocities.org/"]
-      },
-      { 
-        name: "masajes", 
-        links: ["https://meowrhino.github.io/rikamichie/"]
-      },
-      { 
-        name: "tarifas", 
-        links: ["https://meowrhino.github.io/tarifas/"]
-      },
-      { 
-        name: "las xordxs", 
-        links: ["https://meowrhino.github.io/jordiyordiyordyiordi/"]
-      },
-      { 
-        name: "e3000", 
-        links: ["https://meowrhino.github.io/e300/"]
-      },
-      { 
-        name: "villa granota", 
-        links: ["https://villagranota.github.io/villagranota/"]
-      },
-      { 
-        name: "minesweeper", 
-        links: ["https://meowrhino.github.io/etchASketch/"]
-      },
-      { 
-        name: "freewrite", 
-        links: ["https://meowrhino.github.io/writingapp/"]
-      },
-      { 
-        name: "directorio cosas nuevas", 
-        links: ["https://meowrhino.github.io/directorio/"]
-      },
-      { 
-        name: "hopeko", 
-        links: [
-          "https://meowrhino.github.io/hopeko/",
-          "https://meowrhino.github.io/hopeko2/"
-        ]
-      },
-      { 
-        name: "notas", 
-        links: [
-          "https://meowrhino.github.io/notas/",
-          "https://meowrhino.github.io/notas2/",
-          "https://meowrhino.github.io/notas3/"
-        ]
-      },
-      { 
-        name: "barcelona per eixample", 
-        links: ["barcelona.html"]
-      },
-      { 
-        name: "profilePics", 
-        links: ["https://meowrhino.github.io/profilePics/"]
-      },
-      { 
-        name: "rockPaperScissors", 
-        links: ["https://meowrhino.github.io/rockPaperScissors/"]
-      },
-      { 
-        name: "festa", 
-        links: [
-          "https://meowrhino.neocities.org/lafesta_old.html",
-          "https://meowrhino.neocities.org/lafesta.html"
-        ]
-      },
-      { 
-        name: "TFG", 
-        links: ["https://meowrhino.cargo.site/tfg"]
-      },
-      {
-        name: "la torra manel",
-        links: [
-          "https://www.indiexpo.net/es/games/la-torra-manel",
-          "https://www.indiexpo.net/es/games/la-2a-torre-manel",
-          "https://www.indiexpo.net/es/games/la-3era-torra-manel-2"
-        ]
-      },
-    ];
-
-    // Contenedor principal
-    const container = document.querySelector('.container--content');
+// script/containerContentContent.js
+  const container = document.querySelector('.container--content');
 
     // Factor aleatorio
     function getRandomFactor() {
@@ -100,27 +10,23 @@
       return 0.85 + Math.random() * 1.2;
     }
 
-    /**
-     * Devuelve un "indicador" en pseudo-números romanos:
-     */
-    function getRomanIndex(num) {
-      switch (num) {
-          case 1: return "i";
-          case 2: return "ii";
-          case 3: return "iii"; 
-          case 4: return "iv";   
-          case 5: return "v";     
-          default: return num;    
-      }
+  function getRomanIndex(num) {
+    switch (num) {
+      case 1: return "i";
+      case 2: return "ii";
+      case 3: return "iii";
+      case 4: return "iv";
+      case 5: return "v";
+      default: return num;
     }
+  }
 
-    // Crear elemento dinámico (adaptado para single/múltiples enlaces)
-    function createElement(item) {
-      const preBox = document.createElement('div');
-      preBox.classList.add('pre-box');
+  function createElement(item) {
+    const preBox = document.createElement('div');
+    preBox.classList.add('pre-box');
 
-      const box = document.createElement('div');
-      box.classList.add('box', 'box--title');
+    const box = document.createElement('div');
+    box.classList.add('box', 'box--title');
 
       // 1) Comprobamos si hay varios enlaces o solo uno
       const linksArray = item.links || [];
@@ -176,7 +82,33 @@
     }
 
     // Generar elementos inicialmente
+// Generar elementos dinámicamente desde Neocities
+fetch("https://meowrhino.neocities.org/")
+  .then(res => res.text())
+  .then(html => {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    const ainfos = [...doc.querySelectorAll("ainfo")];
+
+    const items = ainfos.map(ainfo => {
+      const name = ainfo.innerText.trim();
+      const links = [];
+      let next = ainfo.nextSibling;
+
+      while (next && next.nodeName !== "AINFO") {
+        if (next.nodeType === 1 && next.tagName === "A" && next.href) {
+          links.push(next.href);
+        }
+        next = next.nextSibling;
+      }
+
+      return { name, links };
+    });
+
     items.forEach(item => createElement(item));
+    updateElements();
+    detectZoomOrScroll();
+  })
+  .catch(err => console.error("Error cargando proyectos:", err));
 
     // Recalcula tamaños y posiciones
     function updateElements() {
@@ -204,27 +136,21 @@
       });
     }
 
-    // Solo recalcula posiciones sin cambiar tamaño
-    function updatePositions() {
-      const elements = container.querySelectorAll('.pre-box');
-      const containerWidth = container.offsetWidth;
-      const containerHeight = container.offsetHeight;
+  function throttle(func, limit) {
+    let inThrottle;
+    return function () {
+      if (!inThrottle) {
+        func.apply(this, arguments);
+        inThrottle = true;
+        setTimeout(() => (inThrottle = false), limit);
+      }
+    };
+  }
 
-      elements.forEach(element => {
-        const elementWidth = element.offsetWidth;
-        const elementHeight = element.offsetHeight;
-        const x = Math.floor(Math.random() * (containerWidth - elementWidth));
-        const y = Math.floor(Math.random() * (containerHeight - elementHeight));
-        element.style.left = `${x}px`;
-        element.style.top = `${y}px`;
-      });
-    }
-
-    // Detectar zoom y scroll
-    function detectZoomOrScroll() {
-      let lastZoom = window.devicePixelRatio;
-      let lastContainerWidth = container.offsetWidth;
-      let lastContainerHeight = container.offsetHeight;
+  function detectZoomOrScroll() {
+    let lastZoom = window.devicePixelRatio;
+    let lastContainerWidth = container.offsetWidth;
+    let lastContainerHeight = container.offsetHeight;
 
       // Detectar zoom
       setInterval(() => {
