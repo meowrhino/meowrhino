@@ -16,13 +16,14 @@ jobs:
       - name: Instala BeautifulSoup
         run: pip install requests beautifulsoup4
 
-      - name: Ejecuta scraper Python
+          - name: Ejecuta scraper Python
         run: |
           python <<EOF
           import requests
           from bs4 import BeautifulSoup
           import json
           from collections import defaultdict
+          import os
 
           url = "https://meowrhino.neocities.org/"
           response = requests.get(url)
@@ -44,15 +45,13 @@ jobs:
               elif el.name == "br":
                   current = None
 
-items = [{"name": k, "links": v} for k, v in data.items() if v]
+          items = [{"name": k, "links": v} for k, v in data.items() if v]
 
-import os
-os.makedirs("data", exist_ok=True)
-
-with open("data/proyectos.json", "w", encoding="utf-8") as f:
-    json.dump(items, f, indent=2, ensure_ascii=False)
+          os.makedirs("data", exist_ok=True)
+          with open("data/proyectos.json", "w", encoding="utf-8") as f:
+              json.dump(items, f, indent=2, ensure_ascii=False)
           EOF
-
+          
       - name: Haz commit si hay cambios
         run: |
           git config user.name "github-actions[bot]"
