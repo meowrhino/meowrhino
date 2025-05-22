@@ -16,7 +16,7 @@ jobs:
       - name: Instala BeautifulSoup
         run: pip install requests beautifulsoup4
 
-     - name: Ejecuta scraper Python
+      - name: Ejecuta scraper Python
         run: |
           python <<EOF
           import requests
