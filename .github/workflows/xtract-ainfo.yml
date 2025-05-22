@@ -16,7 +16,7 @@ jobs:
       - name: Instala BeautifulSoup
         run: pip install requests beautifulsoup4
 
-          - name: Ejecuta scraper Python
+     - name: Ejecuta scraper Python
         run: |
           python <<EOF
           import requests
@@ -51,7 +51,7 @@ jobs:
           with open("data/proyectos.json", "w", encoding="utf-8") as f:
               json.dump(items, f, indent=2, ensure_ascii=False)
           EOF
-          
+
       - name: Haz commit si hay cambios
         run: |
           git config user.name "github-actions[bot]"
