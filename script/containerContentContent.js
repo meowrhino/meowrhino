@@ -82,7 +82,7 @@
     }
 
 // Generar elementos dinámicamente desde el JSON en GitHub Pages
-fetch("/data/proyectos.json")
+fetch("proyectos.json")
   .then(res => res.json())
   .then(items => {
     items.forEach(item => createElement(item));
