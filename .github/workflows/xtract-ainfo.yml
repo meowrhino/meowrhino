@@ -56,7 +56,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/proyectos.json
+          git add proyectos.json || true
           git diff --cached --quiet || git commit -m "actualiza proyectos desde Neocities"
 
       - name: Sube a GitHub
