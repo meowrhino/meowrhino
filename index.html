@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,10 +8,16 @@
   <!-- Fuente tipográfica -->
   <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300&display=swap" rel="stylesheet">
   <!-- Estilos principales -->
-  <link rel="stylesheet" href="css/styles.css">
-  <!-- Paper.js para vectoriales -->
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/palettes.css" />
+  <link rel="stylesheet" href="css/nube.css" />
+
+  <script src="scripts/main.js"></script>
+  <script src="scripts/themeSwitcher.js"></script>
+
   <script src="https://unpkg.com/paper"></script>
 </head>
+
 <body>
   <!-- Canvas de fondo para dibujar nubes -->
   <canvas id="canvas-nubes"></canvas>
@@ -29,8 +36,6 @@
     <div id="color-pickers"></div>
     <button id="apply-theme">Aplicar</button>
   </div>
-
-  <!-- Lógica de generación y switch de tema -->
-  <script src="main.js"></script>
 </body>
+
 </html>
