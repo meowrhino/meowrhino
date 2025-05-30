@@ -486,69 +486,31 @@
   --umbrella-color-4: #dbafa0;
 }
 
-html,
-body {
-  margin: 0;
-  padding: 0; /* So that .dot-container is positioned relative to the body */
-}
-body {
-  background: var(--color-1);
-  margin: 0;
-  padding: 0;
+html, body {
+  margin: 0; padding: 0;
   min-height: 500vh;
 }
 
 #canvas-nubes {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 500vh;
-  z-index: 0;
+  top: 0; left: 0;
+  width: 100vw; height: 500vh;
   pointer-events: none;
+  z-index: 0;
 }
 
 .container--content {
   position: relative;
-  width: 100vw;
-  min-height: 500vh;
+  width: 100vw; height: 500vh;
   z-index: 2;
 }
 
-.nube-box {
+.label {
   position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: var(--color-2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24);
-  border: 5px solid var(--color-3);
+  transform: translate(-50%, -50%);
   font-family: "Inknut Antiqua", serif;
-  clip-path: var(
-    --nube
-  ); /* opcional: para forma nube, o border-radius para más blobby */
-  z-index: 2;
-  overflow: visible;
-  padding: 0 1vw;
-}
-
-.nube-label {
-  z-index: 3;
-  color: var(--color-4);
-  font-family: "Inknut Antiqua", serif;
-  text-align: center;
+  text-shadow: 1px 2px 1px var(--color-3);
   font-size: clamp(1rem, 2vw, 2.5rem);
-  text-shadow: 1.5px 2.5px 1px var(--color-3);
+  color: var(--color-4);
   pointer-events: auto;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  .nube-label {
-    font-size: 1.2rem;
-  }
-  .nube-box {
-    min-width: 40vw;
-  }
 }
