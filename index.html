@@ -13,6 +13,8 @@
 
 <body>
   <div class="dot-container" id="dot-container"></div>
+  <canvas id="canvas-nubes" resize style="position:fixed; inset:0; z-index:0;">
+  </canvas>
 
   <div class="container container--title">
 
@@ -156,9 +158,10 @@
       picker.value = currentColor;
     });
   </script>
+  <script src="https://unpkg.com/paper"></script>
+  <script src="script/containerContentContent.js"></script>
 
   <script src="script/randomPosition.js"></script>
-  <script src="script/containerContentContent.js"></script>
   <script src="script/polkadotsbg.js"></script>
   <script src="script/changepalette.js"></script>
   <script src="script/adjustBoxSizes.js"></script>

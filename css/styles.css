@@ -407,11 +407,29 @@ a {
     align-items: center;
 }
 
-.container--content {
-    display: flex;
-    position: relative;
-    height: 300vh !important;
+/* permite scroll */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: auto;
+  overflow: auto;
+}
 
+/* canvas ocupa todo el contenido (altura = scrollHeight) */
+#canvas-nubes {
+  position: absolute;
+  top:    0;
+  left:   0;
+  width:  100vw;
+  height: 100%;       /* se ajusta vía JS al scrollHeight */
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* tus cajas encima */
+.container--content {
+  position: relative;
+  z-index: 1;
 }
 
 body {
@@ -429,7 +447,7 @@ body {
     /*asi hay por arriba tambien*/
 }
 
-
+/*
 .box {
     position: relative;
     clip-path: var(--nube);
@@ -445,7 +463,6 @@ body {
 
     font-family: 'Inknut Antiqua', serif;
 }
-
 
 .pre-box {
     display: flex;
@@ -468,7 +485,7 @@ body {
 .pre-box--shadow {
     filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.3)) drop-shadow(-5px -5px 5px rgba(0, 0, 0, 0.3));
 }
-
+*/
 /*
 ideas para sombra en pre-box
 .box-shadow {

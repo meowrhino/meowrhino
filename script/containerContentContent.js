@@ -1,15 +1,37 @@
 // script/containerContentContent.js
-  const container = document.querySelector('.container--content');
 
-    // Factor aleatorio
-    function getRandomFactor() {
-      const isMobile = window.matchMedia("(max-width: 600px)").matches;
-      if (isMobile) {
-          return 0.65 + Math.random() * 1.0;
-      }
-      return 0.85 + Math.random() * 1.2;
-    }
+document.addEventListener("DOMContentLoaded", function () {
+  const container = document.querySelector(".container--content");
+  const nubeCSS = getComputedStyle(document.documentElement)
+    .getPropertyValue("--nube")
+    .trim();
+  const nubeCoords = nubeCSS
+    .replace(/^polygon\(|\)$/g, "")
+    .split(",")
+    .map((pt) => pt.trim().split(" "))
+    .map(([xs, ys]) => [parseFloat(xs) / 100, parseFloat(ys) / 100]);
 
+  // Ajusta estos valores para cambiar la cuadrícula (pantallas x columnas)
+  const NUM_VENTANAS = 5;   // vertical (scroll)
+  const NUM_COLS = 3;       // horizontal
+
+  function resizeCanvas() {
+    const canvas = document.getElementById("canvas-nubes");
+    if (!canvas) return;
+    const content = document.querySelector(".container--content");
+    canvas.width = window.innerWidth;
+    canvas.height = content.scrollHeight;
+    paper.view.viewSize = new paper.Size(canvas.width, canvas.height);
+  }
+
+  const canvas = document.getElementById("canvas-nubes");
+  if (!canvas) return;
+  paper.setup("canvas-nubes");
+  resizeCanvas();
+
+  function getRandomBetween(min, max) {
+    return min + Math.random() * (max - min);
+  }
   function getRomanIndex(num) {
     switch (num) {
       case 1: return "i";
@@ -21,216 +43,174 @@
     }
   }
 
-  function createElement(item) {
-    const preBox = document.createElement('div');
-    preBox.classList.add('pre-box');
-
-    const box = document.createElement('div');
-    box.classList.add('box', 'box--title');
-
-      // 1) Comprobamos si hay varios enlaces o solo uno
-      const linksArray = item.links || [];
-      if (linksArray.length <= 1) {
-          // ---- SOLO UN ENLACE ----
-          const h5 = document.createElement('h5');
-          const linkElement = document.createElement('a');
-          linkElement.href = linksArray[0] || "#";
-          linkElement.textContent = item.name;
-          linkElement.target = "_blank";
-          h5.appendChild(linkElement);
-          box.appendChild(h5);
-
-      } else {
-          // ---- VARIOS ENLACES ----
-          // Creamos el h4 con el nombre
-          const h4 = document.createElement('h4');
-          box.classList.add('flex-column');
-          
-          h4.textContent = item.name;
-          box.appendChild(h4);
-          
-
-          // Debajo, un <p> con spans para cada enlace
-          const p = document.createElement('p');
-          linksArray.forEach((link, index) => {
-              const span = document.createElement('span');
-              const a = document.createElement('a');
-              a.target = "_blank";
-              a.href = link;
-              // index comienza en 0, así que para getRomanIndex lo pasamos como (index+1)
-              a.textContent = getRomanIndex(index + 1);
-              span.appendChild(a);
-              p.appendChild(span);
-          });
-          box.appendChild(p);
+  // --- NUEVO: Distribución 2D en cuadrícula ---
+  function getPositions(items) {
+    // Calcula las celdas
+    const numSlots = NUM_VENTANAS * NUM_COLS;
+    // Si hay más items que slots, se pueden superponer (tuneable)
+    const slots = [];
+    for (let v = 0; v < NUM_VENTANAS; v++) {
+      for (let c = 0; c < NUM_COLS; c++) {
+        slots.push({ v, c });
       }
-
-      // Ajustes de estilo y dimensiones
-      box.style.height = 'inherit';
-      box.style.width = 'inherit';
-      preBox.appendChild(box);
-
-      // Aplicar un tamaño aleatorio
-      const randomFactor = getRandomFactor();
-      const baseWidth = 200;
-      const newWidth = baseWidth * randomFactor;
-      const newHeight = newWidth / 1.55;
-      preBox.style.width = `${newWidth}px`;
-      preBox.style.height = `${newHeight}px`;
-
-      container.appendChild(preBox);
     }
+    // Aleatoriza slots para no tener siempre el mismo orden
+    for (let i = slots.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [slots[i], slots[j]] = [slots[j], slots[i]];
+    }
+    // Reparte items por slots, si hay más items que slots, repite (aleatorio)
+    const positions = items.map((item, i) => {
+      const slot = slots[i % slots.length];
+      const ventanaHeightPct = 1 / NUM_VENTANAS;
+      const colWidthPct = 1 / NUM_COLS;
 
-// Generar elementos dinámicamente desde el JSON en GitHub Pages
-fetch("proyectos.json")
-  .then(res => res.json())
-  .then(items => {
-    items.forEach(item => createElement(item));
-    updateElements();
-    detectZoomOrScroll();
-  })
-  .catch(err => console.error("Error cargando proyectos:", err));
+      // Sortea dentro de la celda (con márgenes)
+      const yMin = slot.v * ventanaHeightPct;
+      const yMax = (slot.v + 1) * ventanaHeightPct;
+      const xMin = slot.c * colWidthPct;
+      const xMax = (slot.c + 1) * colWidthPct;
 
-    // Recalcula tamaños y posiciones
-    function updateElements() {
-      const elements = container.querySelectorAll('.pre-box');
-      const containerWidth = container.offsetWidth;
-      const containerHeight = container.offsetHeight;
+      const topPct = getRandomBetween(yMin + 0.07, yMax - 0.18);
+      const leftPct = getRandomBetween(xMin + 0.03, xMax - 0.28);
 
-      elements.forEach(element => {
-        // Tamaño aleatorio
-        const randomFactor = getRandomFactor();
-        const baseWidth = 200;
-        const newWidth = baseWidth * randomFactor;
-        const newHeight = newWidth / 1.55;
-        element.style.width = `${newWidth}px`;
-        element.style.height = `${newHeight}px`;
+      // Tamaño relativo a viewport
+      const widthPct = 0.28 + Math.random() * 0.06; // entre 28-34vw
+      const heightPct = widthPct / 1.55;
 
-        // Posición aleatoria
-        const elementWidth = element.offsetWidth;
-        const elementHeight = element.offsetHeight;
-        const x = Math.floor(Math.random() * (containerWidth - elementWidth));
-        const y = Math.floor(Math.random() * (containerHeight - elementHeight));
-        element.style.left = `${x}px`;
-        element.style.top = `${y}px`;
-        element.style.position = 'absolute';
+      return { leftPct, topPct, widthPct, heightPct };
+    });
+    return positions;
+  }
+
+  function createBlobPx({leftPct, topPct, widthPct, heightPct}, cw, ch) {
+    const x = leftPct * cw;
+    const y = topPct * ch;
+    const w = widthPct * cw;
+    const h = heightPct * ch;
+
+    const path = new paper.Path();
+    nubeCoords.forEach(([px, py], i) => {
+      const pt = new paper.Point(x + px * w, y + py * h);
+      i === 0 ? path.moveTo(pt) : path.lineTo(pt);
+    });
+    path.closePath();
+    path.fillColor = getComputedStyle(document.documentElement).getPropertyValue("--color-2").trim();
+    path.strokeColor = getComputedStyle(document.documentElement).getPropertyValue("--color-3").trim();
+    path.strokeWidth = 8;
+    path.shadowColor = new paper.Color(0, 0, 0, 0.2);
+    path.shadowBlur = 16;
+    return path;
+  }
+
+  function createTextBoxPx(item, pos, cw, ch) {
+    const x = pos.leftPct * cw;
+    const y = pos.topPct * ch;
+    const w = pos.widthPct * cw;
+    const h = pos.heightPct * ch;
+
+    const box = document.createElement("div");
+    box.classList.add("box", "box--title");
+    Object.assign(box.style, {
+      position: "absolute",
+      left: `${x}px`,
+      top: `${y}px`,
+      width: `${w}px`,
+      height: `${h}px`,
+      zIndex: 2
+    });
+
+    const links = item.links || [];
+    if (links.length <= 1) {
+      const h5 = document.createElement("h5");
+      const a = document.createElement("a");
+      a.href = links[0] || "#";
+      a.textContent = item.name;
+      a.target = "_blank";
+      h5.appendChild(a);
+      box.appendChild(h5);
+    } else {
+      box.classList.add("flex-column");
+      const h4 = document.createElement("h4");
+      h4.textContent = item.name;
+      box.appendChild(h4);
+      const p = document.createElement("p");
+      links.forEach((ln, i) => {
+        const span = document.createElement("span");
+        const a = document.createElement("a");
+        a.href = ln;
+        a.textContent = getRomanIndex(i + 1);
+        a.target = "_blank";
+        span.appendChild(a);
+        p.appendChild(span);
       });
+      box.appendChild(p);
     }
+    container.appendChild(box);
+  }
 
-  function throttle(func, limit) {
-    let inThrottle;
-    return function () {
-      if (!inThrottle) {
-        func.apply(this, arguments);
-        inThrottle = true;
-        setTimeout(() => (inThrottle = false), limit);
+  function fuseBlobs(blobs) {
+    const merged = [];
+    const used = Array(blobs.length).fill(false);
+    for (let i = 0; i < blobs.length; i++) {
+      if (used[i]) continue;
+      let cur = blobs[i];
+      for (let j = i + 1; j < blobs.length; j++) {
+        if (used[j]) continue;
+        if (cur.bounds.intersects(blobs[j].bounds) && cur.intersects(blobs[j])) {
+          cur = cur.unite(blobs[j]);
+          blobs[j].remove();
+          used[j] = true;
+        }
+      }
+      merged.push(cur);
+      used[i] = true;
+    }
+    return merged;
+  }
+
+  let blobs = [];
+  let itemsData = [];
+  let positions = [];
+  function render() {
+    paper.project.activeLayer.removeChildren();
+    container.innerHTML = "";
+    blobs = [];
+
+    const cw = container.scrollWidth;
+    const ch = container.scrollHeight;
+
+    itemsData.forEach((item, idx) => {
+      blobs.push(createBlobPx(positions[idx], cw, ch));
+      createTextBoxPx(item, positions[idx], cw, ch);
+    });
+
+    fuseBlobs(blobs);
+    paper.view.update();
+  }
+
+  function throttle(fn, limit) {
+    let busy = false;
+    return (...args) => {
+      if (!busy) {
+        fn(...args);
+        busy = true;
+        setTimeout(() => (busy = false), limit);
       }
     };
   }
 
-  function detectZoomOrScroll() {
-    let lastZoom = window.devicePixelRatio;
-    let lastContainerWidth = container.offsetWidth;
-    let lastContainerHeight = container.offsetHeight;
+  window.addEventListener("resize", throttle(() => {
+    resizeCanvas();
+    render();
+  }, 200));
 
-      // Detectar zoom
-      setInterval(() => {
-        if (window.devicePixelRatio !== lastZoom) {
-          lastZoom = window.devicePixelRatio;
-          // Actualizar solo si cambian las dimensiones del contenedor
-          if (
-            container.offsetWidth !== lastContainerWidth ||
-            container.offsetHeight !== lastContainerHeight
-          ) {
-            lastContainerWidth = container.offsetWidth;
-            lastContainerHeight = container.offsetHeight;
-            updateElements();
-          }
-        }
-      }, 200);
-
-      // Detectar scroll (solo posiciones con throttle)
-     /* window.addEventListener('scroll', throttle(updatePositions, 200));*/
-    }
-
-    // Limitar frecuencia de ejecución
-    function throttle(func, limit) {
-      let inThrottle;
-      return function () {
-        const args = arguments;
-        const context = this;
-        if (!inThrottle) {
-          func.apply(context, args);
-          inThrottle = true;
-          setTimeout(() => (inThrottle = false), limit);
-        }
-      };
-    }
-
-    // Eventos
-    window.addEventListener('resize', throttle(updateElements, 200));
-
-    document.addEventListener('DOMContentLoaded', () => {
-      updateElements();  // Ajusta tamaños y posiciones al cargar
-      detectZoomOrScroll();
-    });
-
-/*
-// Aplicar posiciones y tamaños iniciales al cargar la página
-document.addEventListener('DOMContentLoaded', () => {
-    items.forEach(item => {
-        createElement(item.name, item.link);
-    });
-    updateElements(); // Aplicar posiciones y tamaños inicialmente
-    detectZoomOrScroll(); // Detectar zoom o scroll
+  fetch("proyectos.json")
+    .then((r) => r.json())
+    .then((data) => {
+      itemsData = data;
+      positions = getPositions(itemsData);
+      render();
+    })
+    .catch((e) => console.error(e));
 });
-*/
-
-/*
-// Detectar zoom o scroll y activar updateElements
-function detectZoomOrScroll() {
-    let lastZoom = window.devicePixelRatio;
-
-    // Detectar cambios de zoom
-    setInterval(() => {
-        if (window.devicePixelRatio !== lastZoom) {
-            lastZoom = window.devicePixelRatio;
-            updateElements();
-        }
-    }, 100);
-
-    // Detectar scroll
-    window.addEventListener('scroll', updateElements);
-}
-
-// Aplicar posiciones y tamaños iniciales al cargar la página
-document.addEventListener('DOMContentLoaded', () => {
-    items.forEach(item => {
-        createElement(item.name, item.link);
-    });
-    updateElements(); // Aplicar posiciones y tamaños inicialmente
-    detectZoomOrScroll(); // Detectar zoom o scroll
-});
-*/
-
-/*
-cosas traviesas:
-// Función para que el elemento cambie de posición al intentar atraparlo
-function addEscapeBehavior() {
-    const elements = container.querySelectorAll('.pre-box');
-    elements.forEach(element => {
-        element.addEventListener('mouseover', () => {
-            const containerWidth = container.offsetWidth;
-            const containerHeight = container.offsetHeight;
-            const elementWidth = element.offsetWidth;
-            const elementHeight = element.offsetHeight;
-
-            const x = Math.floor(Math.random() * (containerWidth - elementWidth));
-            const y = Math.floor(Math.random() * (containerHeight - elementHeight));
-
-            element.style.left = `${x}px`;
-            element.style.top = `${y}px`;
-        });
-    });
-}
-    */
