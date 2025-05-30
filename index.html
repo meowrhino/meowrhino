@@ -9,162 +9,187 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <script src="https://unpkg.com/paper"></script>
 </head>
 
 <body>
-  <div class="dot-container" id="dot-container"></div>
-  <canvas id="canvas-nubes" resize style="position:fixed; inset:0; z-index:0;">
-  </canvas>
-
-  <div class="container container--title">
-
-    <div class="pre-box--shadow">
-      <div class="pre-box">
-        <div class="box box--title ">
-          <h1>meowrhino</h1>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="container container--content">
-
-
-  </div>
-  </div>
-  <div class="container container--title">
-  </div>
-
-
-
-  <div class="pre-box box--palette">
-    <div class="box box--palette">
-      <span class="popup-trigger">
-        <h4>open fun</h4>
-      </span>
-    </div>
-  </div>
-
-  <div class="popup">
-    <span class="close-popup">
-      <h4>close fun</h4>
-    </span>
-
-    <div class="pre-box--shadow">
-      <div class="pre-box">
-        <div class="box">
-          <div class="palette-buttons">
-
-            <div class="palette-column">
-              <button class="palette-btn" onclick="applyPalette('original')">original</button>
-              <button class="palette-btn" onclick="applyPalette('burnt')">burnt</button>
-              <button class="palette-btn" onclick="applyPalette('')">monochrome</button>
-              <button class="palette-btn" onclick="applyPalette('archive')">archive</button>
-              <button class="palette-btn" onclick="applyPalette('tfg')">tfg</button>
-            </div>
-
-            <div class="palette-column">
-              <button class="palette-btn" onclick="applyPalette('ketchup')">ketchup</button>
-              <button class="palette-btn" onclick="applyPalette('chocoBar')">chocoBar</button>
-              <button class="palette-btn" onclick="applyPalette('shootingStar')">shootingStar</button>
-              <button class="palette-btn" onclick="applyPalette('skull')">skull</button>
-              <button class="palette-btn" onclick="applyPalette('lemonzest')">lemonzest</button>
-            </div>
-
-            <div class="palette-column">
-              <button class="palette-btn" onclick="applyPalette('coolCap')">coolCap</button>
-              <button class="palette-btn" onclick="applyPalette('baby')">baby</button>
-              <button class="palette-btn" onclick="applyPalette('autumnWinter')">autumnWinter</button>
-              <button class="palette-btn" onclick="applyPalette('lavenderMint')">lavenderMint</button>
-              <button class="palette-btn" onclick="applyPalette('fortuneCookie')">fortuneCookie</button>
-            </div>
-
-            <div class="palette-column">
-              <button class="palette-btn" onclick="applyPalette('raspberry')">raspberry</button>
-              <button class="palette-btn" onclick="applyPalette('dino')">dino</button>
-              <button class="palette-btn" onclick="applyPalette('mailBox')">mailBox</button>
-              <button class="palette-btn" onclick="applyPalette('lumber')">lumber</button>
-              <button class="palette-btn" onclick="applyPalette('pewpew')">pewpew</button>
-            </div>
-
-            <div class="palette-column">
-              <button class="palette-btn" onclick="applyPalette('orangeOracle')">orangeOracle</button>
-              <button class="palette-btn" onclick="applyPalette('coolTheyThem')">coolTheyThem</button>
-              <button class="palette-btn" onclick="applyPalette('shyThunder')">shyThunder</button>
-              <button class="palette-btn" onclick="applyPalette('demure')">demure</button>
-              <button class="palette-btn" onclick="applyPalette('gingerBread')">gingerBread</button>
-            </div>
-
-            <div class="palette-column">
-              <button class="palette-btn" onclick="applyPalette('zombie')">zombie</button>
-              <button class="palette-btn" onclick="applyPalette('vampire')">vampire</button>
-              <button class="palette-btn" onclick="applyPalette('sibyl')">sibyl</button>
-              <button class="palette-btn" onclick="applyPalette('bumblebee')">bumblebee</button>
-              <button class="palette-btn" onclick="applyPalette('pumpkin')">pumpkin</button>
-            </div>
-
-            <div class="palette-column">
-              <button class="palette-btn" onclick="applyPalette('spiderweb')">spiderweb</button>
-              <button class="palette-btn" onclick="applyPalette('amphora')">amphora</button>
-              <button class="palette-btn" onclick="applyPalette('beetle')">beetle</button>
-              <button class="palette-btn" onclick="applyPalette('crayon')">crayon</button>
-              <button class="palette-btn" onclick="applyPalette('umbrella')">umbrella</button>
-            </div>
-
-          </div>
-          <div class="color-grid">
-            <div class="color-rect" data-color="1">
-              <input type="color" class="color-picker" data-color-var="--color-1">
-            </div>
-            <div class="color-rect" data-color="2">
-              <input type="color" class="color-picker" data-color-var="--color-2">
-            </div>
-            <div class="color-rect" data-color="3">
-              <input type="color" class="color-picker" data-color-var="--color-3">
-            </div>
-            <div class="color-rect" data-color="4">
-              <input type="color" class="color-picker" data-color-var="--color-4">
-            </div>
-          </div>
-
-          <div class="shuffleClouds">
-            <button onclick="updatePositions()">remover nubes</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
+  <canvas id="canvas-nubes"></canvas>
+  <div class="container--content"></div>
+  <!-- Botón open fun, paleta, etc., aquí -->
+  <button id="open-fun">open fun</button>
+  <!-- ...paletas de colores aquí... -->
   <script>
-    document.querySelector('.popup-trigger').addEventListener('click', () => {
-      document.querySelector('.popup').classList.add('active');
-    });
+    document.addEventListener("DOMContentLoaded", async function () {
+  // --- Configuración base ---
+  const NUM_VENTANAS = 5;   // Número de "pantallas" verticales
+  const NUM_CUADRANTES_H = 1; // Divide horizontalmente cada ventana en 2 (left/right, tú eliges)
 
-    document.querySelector('.close-popup').addEventListener('click', () => {
-      document.querySelector('.popup').classList.remove('active');
-    });
+  // --- Datos de proyectos ---
+  const proyectos = await fetch("proyectos.json").then(r => r.json());
 
-    document.querySelectorAll('.color-picker').forEach(picker => {
-      picker.addEventListener('input', (e) => {
-        const colorVar = e.target.dataset.colorVar;
-        document.documentElement.style.setProperty(colorVar, e.target.value);
+  // --- DOM elements ---
+  const container = document.querySelector(".container--content");
+  const canvas = document.getElementById("canvas-nubes");
+
+  // --- Coordenadas poligonales para el blob (clip-path en CSS, path en canvas) ---
+  const nubeCSS = getComputedStyle(document.documentElement).getPropertyValue("--nube").trim();
+  const nubeCoords = nubeCSS.replace(/^polygon\(|\)$/g, "")
+    .split(",")
+    .map(pt => pt.trim().split(" "))
+    .map(([xs, ys]) => [parseFloat(xs) / 100, parseFloat(ys) / 100]);
+
+  // --- 1. GENERA POSICIONES EN VENTANAS Y CUADRANTES ---
+  // Cada palabra se coloca en su sección vertical (ventana) y, opcional, cuadrante horizontal (izq/der, centro...)
+  function calculaPosiciones() {
+    let secciones = Array.from({ length: NUM_VENTANAS }, () => []);
+    proyectos.forEach((p, i) => secciones[i % NUM_VENTANAS].push(p));
+    let posiciones = [];
+
+    // Ajusta estos valores para personalizar la "aleatoriedad" y dispersión
+    secciones.forEach((projs, vIdx) => {
+      projs.forEach((p, i) => {
+        // Divide horizontalmente (ej: 2 cuadrantes: left, right)
+        const hIdx = i % NUM_CUADRANTES_H;
+        const leftBase = (hIdx / NUM_CUADRANTES_H) * 100;
+        const leftMax = ((hIdx + 1) / NUM_CUADRANTES_H) * 100;
+
+        // Rango vertical SOLO dentro de su ventana
+        const topBase = vIdx * 100;
+        const top = topBase + 10 + Math.random() * 70; // 10-80vh dentro de cada ventana
+        const left = leftBase + 5 + Math.random() * (leftMax - leftBase - 20); // deja margen lateral
+
+        // Tamaño coherente, responsive
+        const w = 18 + Math.random() * 9; // ancho en vw
+        const h = w / 1.55 * (window.innerWidth / window.innerHeight);
+
+        posiciones.push({ top, left, w, h, proyecto: p });
       });
-
-      // Set initial color picker values
-      const colorVar = picker.dataset.colorVar;
-      const currentColor = getComputedStyle(document.documentElement)
-        .getPropertyValue(colorVar);
-      picker.value = currentColor;
     });
-  </script>
-  <script src="https://unpkg.com/paper"></script>
-  <script src="script/containerContentContent.js"></script>
+    return posiciones;
+  }
 
-  <script src="script/randomPosition.js"></script>
-  <script src="script/polkadotsbg.js"></script>
-  <script src="script/changepalette.js"></script>
-  <script src="script/adjustBoxSizes.js"></script>
+  // --- 2. INICIALIZAR Paper.js Y AJUSTAR CANVAS ---
+  function resizeCanvas() {
+    // Canvas siempre igual de alto que las "ventanas"
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight * NUM_VENTANAS;
+    paper.view.viewSize = new paper.Size(canvas.width, canvas.height);
+  }
+  paper.setup(canvas);
+  resizeCanvas();
+
+  // --- 3. DIBUJA LAS NUBES EN EL CANVAS, FUSIONA SI SE SOLAPAN ---
+  function renderBlobs(posiciones) {
+    paper.project.activeLayer.removeChildren();
+    let blobs = [];
+
+    posiciones.forEach(({ top, left, w, h }) => {
+      // vh/vw a px (para el canvas)
+      const x = (left / 100) * canvas.width;
+      const y = (top / (NUM_VENTANAS * 100)) * canvas.height; // (top/500)*height si 5 ventanas
+      const ancho = (w / 100) * canvas.width;
+      const alto = (h / (NUM_VENTANAS * 100)) * canvas.height * NUM_VENTANAS; // Ajuste vertical para proporcionalidad
+
+      // Crea path poligonal en Paper.js (misma forma que CSS)
+      const path = new paper.Path();
+      nubeCoords.forEach(([px, py], i) => {
+        const pt = new paper.Point(x + px * ancho, y + py * alto);
+        i === 0 ? path.moveTo(pt) : path.lineTo(pt);
+      });
+      path.closed = true;
+      path.fillColor = getComputedStyle(document.documentElement).getPropertyValue("--color-2").trim();
+      path.strokeColor = getComputedStyle(document.documentElement).getPropertyValue("--color-3").trim();
+      path.strokeWidth = 8;
+      path.shadowColor = new paper.Color(0, 0, 0, 0.24);
+      path.shadowBlur = 24;
+
+      blobs.push(path);
+    });
+
+    // --- FUSIONA BLOBS QUE SE TOCAN (como conjuntos) ---
+    let fusionados = [];
+    let usados = Array(blobs.length).fill(false);
+    for (let i = 0; i < blobs.length; i++) {
+      if (usados[i]) continue;
+      let cur = blobs[i];
+      for (let j = i + 1; j < blobs.length; j++) {
+        if (usados[j]) continue;
+        if (cur.bounds.intersects(blobs[j].bounds) && cur.intersects(blobs[j])) {
+          cur = cur.unite(blobs[j]);
+          blobs[j].remove();
+          usados[j] = true;
+        }
+      }
+      fusionados.push(cur);
+      usados[i] = true;
+    }
+    // Estiliza los fusionados (stroke, sombra, etc.)
+    fusionados.forEach(b => {
+      b.strokeColor = getComputedStyle(document.documentElement).getPropertyValue("--color-3").trim();
+      b.strokeWidth = 8;
+      b.shadowColor = new paper.Color(0, 0, 0, 0.22);
+      b.shadowBlur = 32;
+    });
+
+    paper.view.update();
+  }
+
+  // --- 4. RENDERIZA LOS LABELS/PALABRAS ENCIMA DE LAS NUBES ---
+  function renderLabels(posiciones) {
+    container.innerHTML = "";
+    posiciones.forEach(({ top, left, w, h, proyecto }) => {
+      // Crea div con tu mismo CSS para nube y label (¡usa tu .nube-box!)
+      const nubeDiv = document.createElement('div');
+      nubeDiv.className = 'nube-box';
+      nubeDiv.style.top = `${top}vh`;
+      nubeDiv.style.left = `${left}vw`;
+      nubeDiv.style.width = `${w}vw`;
+      nubeDiv.style.height = `${h}vh`;
+      // Puedes quitar el color de fondo en CSS si solo quieres la nube visual detrás
+
+      // Palabra, con enlace si hay
+      const label = document.createElement('div');
+      label.className = 'nube-label';
+      if (proyecto.links && proyecto.links.length > 0) {
+        const a = document.createElement('a');
+        a.href = proyecto.links[0];
+        a.target = '_blank';
+        a.textContent = proyecto.name || proyecto.titulo || 'Sin nombre';
+        a.style.color = 'inherit';
+        a.style.textDecoration = 'none';
+        label.appendChild(a);
+      } else {
+        label.textContent = proyecto.name || proyecto.titulo || 'Sin nombre';
+      }
+      nubeDiv.appendChild(label);
+
+      container.appendChild(nubeDiv);
+    });
+  }
+
+  // --- 5. RENDER PRINCIPAL: DIBUJA Y POSICIONA TODO ---
+  let posiciones = calculaPosiciones();
+  function renderAll() {
+    resizeCanvas();
+    renderBlobs(posiciones); // las nubes del canvas (fusionadas)
+    renderLabels(posiciones); // las palabras encima, usando tu CSS
+  }
+
+  // --- 6. REDIBUJA SOLO (NO REGENERA POSICIONES) AL REDIMENSIONAR ---
+  window.addEventListener("resize", () => {
+    renderAll();
+  });
+
+  // --- 7. ARRANCA ---
+  renderAll();
+
+  // --- EXTRA: SI QUIERES REGENERA POSICIONES AL RECARGAR ---
+  // window.addEventListener("dblclick", () => { posiciones = calculaPosiciones(); renderAll(); });
+
+});
+  </script>
+
 </body>
+
 
 </html>
