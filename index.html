@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,30 +11,30 @@
   <link rel="stylesheet" href="css/palettes.css" />
   <link rel="stylesheet" href="css/nube.css" />
 
-  <script src="scripts/main.js"></script>
-  <script src="scripts/themeSwitcher.js"></script>
-
   <script src="https://unpkg.com/paper"></script>
 </head>
-
 <body>
-  <!-- Canvas de fondo para dibujar nubes -->
+  <!-- Canvas para dibujar nubes -->
   <canvas id="canvas-nubes"></canvas>
 
-  <!-- Contenedor de las etiquetas (labels) sobre las nubes -->
+  <!-- Contenedor de etiquetas sobre nubes -->
   <div class="container--content"></div>
 
-  <!-- Botón para abrir el selector de tema/paleta -->
-  <button id="open-fun">🎨 Open Fun</button>
+  <!-- Botones fijos a la derecha estilo sin decoración -->
+  <button id="open-fun" class="btn-plain">fun</button>
+  <button id="shuffle" class="btn-plain">mix</button>
 
-  <!-- Panel oculto para elegir paleta y color pickers -->
+  <!-- Panel de selección de tema/paleta -->
   <div id="theme-panel" class="hidden">
     <h3>Selecciona Tema</h3>
     <select id="theme-select"></select>
     <h4>Personaliza Colores</h4>
     <div id="color-pickers"></div>
-    <button id="apply-theme">Aplicar</button>
+    <button id="apply-theme" class="btn-plain">Aplicar</button>
   </div>
-</body>
 
+  <!-- Lógica principal y switcher de tema -->
+  <script src="js/main.js"></script>
+  <script src="js/themeSwitcher.js"></script>
+</body>
 </html>
