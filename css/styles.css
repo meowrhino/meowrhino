@@ -520,7 +520,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 100px;
+
   background: var(--color-2);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24);
   border: 5px solid var(--color-3);
