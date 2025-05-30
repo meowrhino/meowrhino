@@ -2,15 +2,35 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nubes Aleatorias</title>
+  <!-- Fuente tipográfica -->
   <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css" />
+  <!-- Estilos principales -->
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- Paper.js para vectoriales -->
   <script src="https://unpkg.com/paper"></script>
 </head>
 <body>
+  <!-- Canvas de fondo para dibujar nubes -->
   <canvas id="canvas-nubes"></canvas>
+
+  <!-- Contenedor de las etiquetas (labels) sobre las nubes -->
   <div class="container--content"></div>
-  <button id="refresh">🔄 Refresh</button>
-  <script src="./main.js"></script>
+
+  <!-- Botón para abrir el selector de tema/paleta -->
+  <button id="open-fun">🎨 Open Fun</button>
+
+  <!-- Panel oculto para elegir paleta y color pickers -->
+  <div id="theme-panel" class="hidden">
+    <h3>Selecciona Tema</h3>
+    <select id="theme-select"></select>
+    <h4>Personaliza Colores</h4>
+    <div id="color-pickers"></div>
+    <button id="apply-theme">Aplicar</button>
+  </div>
+
+  <!-- Lógica de generación y switch de tema -->
+  <script src="main.js"></script>
 </body>
 </html>

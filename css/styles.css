@@ -488,7 +488,9 @@
 
 html, body {
   margin: 0; padding: 0;
+  /* 500vh para scroll largo */
   min-height: 500vh;
+  background: var(--color-1);
 }
 
 #canvas-nubes {
@@ -513,4 +515,22 @@ html, body {
   font-size: clamp(1rem, 2vw, 2.5rem);
   color: var(--color-4);
   pointer-events: auto;
+}
+
+/* Panel de tema */
+#theme-panel {
+  position: fixed;
+  top: 2rem; right: 2rem;
+  background: rgba(255,255,255,0.9);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  z-index: 5;
+}
+.hidden { display: none; }
+
+#color-pickers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
 }
