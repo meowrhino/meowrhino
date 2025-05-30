@@ -1,6 +1,12 @@
+:root {
+  --color-1: var(--monochrome-color-1);
+  --color-2: var(--monochrome-color-2);
+  --color-3: var(--monochrome-color-3);
+  --color-4: var(--monochrome-color-4);
+}
+
 html, body {
   margin: 0; padding: 0;
-  /* 500vh para scroll largo */
   min-height: 500vh;
   background: var(--color-1);
 }
@@ -22,7 +28,7 @@ html, body {
 .label {
   position: absolute;
   transform: translate(-50%, -50%);
-    transform-origin: center center;   /* <— aquí */
+  transform-origin: center center;
   font-family: "Inknut Antiqua", serif;
   text-shadow: 1px 2px 1px var(--color-3);
   font-size: clamp(1rem, 2vw, 2.5rem);
@@ -30,10 +36,32 @@ html, body {
   pointer-events: auto;
 }
 
+/* Enlaces en etiquetas */
+.label a {
+  color: var(--color-4);
+  text-decoration: none;
+}
+.label a:hover,
+.label a:focus {
+  text-decoration: underline;
+}
+
+/* Botones estilo enlace, fijos a la derecha */
+.btn-plain {
+  all: unset;
+  position: fixed;
+  right: 1rem;
+  color: var(--color-4);
+  cursor: pointer;
+  z-index: 5;
+}
+#open-fun { bottom: 3rem; }
+#shuffle  { bottom: 1rem; }
+
 /* Panel de tema */
 #theme-panel {
   position: fixed;
-  top: 2rem; right: 2rem;
+  top: 6rem; right: 1rem;
   background: rgba(255,255,255,0.9);
   padding: 1rem;
   border-radius: 8px;
@@ -46,16 +74,4 @@ html, body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
-}
-
-/* Enlaces dentro de las nubes */
-.label a {
-  color: var(--color-4);
-  text-decoration: none;
-}
-
-/* Subrayado sólo al pasar el ratón o con focus */
-.label a:hover,
-.label a:focus {
-  text-decoration: underline;
 }

@@ -1,7 +1,8 @@
 window.addEventListener("DOMContentLoaded", async () => {
   // Parámetros de generación
   const TOTAL_HEIGHT_VH = 500;
-  const NUM_NUBES = 25;
+  const NUM_NUBES_DEFAULT = 25;
+  let NUM_NUBES;
 
   // Detectamos móvil por anchura
   const isMobile = window.innerWidth <= 600;
@@ -19,6 +20,9 @@ window.addEventListener("DOMContentLoaded", async () => {
   const selTheme = document.getElementById("theme-select");
   const divPickers = document.getElementById("color-pickers");
   const btnApply = document.getElementById("apply-theme");
+
+  // Número de nubes por defecto
+  NUM_NUBES = NUM_NUBES_DEFAULT;
 
   // Carga datos de proyectos
   const proyectos = await fetch("proyectos.json").then((r) => r.json());
@@ -85,12 +89,17 @@ window.addEventListener("DOMContentLoaded", async () => {
         else path.lineTo(pxAbs, pyAbs);
       });
       path.closed = true;
-      path.fillColor = getComputedStyle(document.documentElement)
-        .getPropertyValue("--color-2")
-        .trim();
-      path.strokeColor = getComputedStyle(document.documentElement)
-        .getPropertyValue("--color-3")
-        .trim();
+      // Obtener colores de CSS con fallback para no asignar ""
+      const fill =
+        getComputedStyle(document.documentElement)
+          .getPropertyValue("--color-2")
+          .trim() || "#ffffff";
+      const stroke =
+        getComputedStyle(document.documentElement)
+          .getPropertyValue("--color-3")
+          .trim() || "#000000";
+      path.fillColor = fill;
+      path.strokeColor = stroke;
       path.strokeWidth = 6;
       return path;
     });
@@ -171,33 +180,50 @@ window.addEventListener("DOMContentLoaded", async () => {
     // 2) Llenamos el <select> con cada tema detectado
     cssVars.forEach((prefijo) => {
       const option = document.createElement("option");
-      option.value = prefijo; // e.g. "theme-monochrome"
-      option.textContent = prefijo.replace("theme-", ""); // e.g. "monochrome"
+      option.value = prefijo;
+      option.textContent = prefijo.replace("theme-", "");
       selTheme.appendChild(option);
     });
 
-    // 3) Al cambiar la selección, creamos 4 color pickers
+    // 1) Seleccionamos la primera paleta automáticamente
+    selTheme.selectedIndex = 0;
+
+    // 2) Disparamos el cambio para que cree los pickers
+    selTheme.dispatchEvent(new Event("change"));
+
+    // 3) (Opcional) Aplicamos directamente los colores base de esa paleta
+    btnApply.click();
+
+    // 4) Luego añadimos tu listener normal de “change” para el usuario
     selTheme.addEventListener("change", () => {
       divPickers.innerHTML = ""; // limpiamos viejos pickers
       const pref = selTheme.value; // p.ej. "theme-monochrome"
 
       [1, 2, 3, 4].forEach((i) => {
-        const varName = `--${pref}-color-${i}`; // "--theme-monochrome-color-1"
+        const varName = `--${pref}-color-${i}`;
+
+        // 1) Leemos el valor actual del tema, validamos o usamos blanco por defecto
+        let raw = getComputedStyle(document.documentElement)
+          .getPropertyValue(varName)
+          .trim();
+        const safe = /^#([0-9A-F]{6})$/i.test(raw) ? raw : "#ffffff";
+
+        // 2) Montamos el picker con un value seguro
         const pickerWrap = document.createElement("div");
         pickerWrap.innerHTML = `
-        <label>${varName}</label>
-        <input 
-          type="color" 
-          data-var="--color-${i}" 
-          data-theme-var="${varName}"
-          value="${getComputedStyle(document.documentElement)
-            .getPropertyValue(varName)
-            .trim()}" 
-        />
-      `;
+  <label>
+    ${varName}
+    <input 
+      type="color" 
+      data-var="--color-${i}" 
+      data-theme-var="${varName}"
+      value="${safe}"
+    />
+  </label>
+`;
         divPickers.appendChild(pickerWrap);
-      });
-    });
+      }); // <-- aquí cerramos el forEach
+    }); // <-- y aquí cerramos el callback de 'change'
 
     // 4) Al hacer click en "Aplicar", reasignamos variables y overrides
     btnApply.addEventListener("click", () => {
@@ -235,6 +261,10 @@ window.addEventListener("DOMContentLoaded", async () => {
   }
 
   // --- Inicialización ---
-  initThemeSwitcher();
-  render();
+  // --- Inicialización ---
+// --- Inicialización ---
+initThemeSwitcher();
+// ya no necesitas volver a forzar el dispatch/change aquí
+// porque lo haces dentro de initThemeSwitcher
+render();
 });
