@@ -104,14 +104,19 @@
             "title": "WIP",
             "url": "https://meowrhino.github.io/meowrhino/",
             "sup": "clouds"
+          },
+          {
+            "title": "TBA",
+            "url": "https://meowrhino.github.io/meowrhinoSpace/",
+            "sup": "space"
+          },
+          {
+            "title": "link",
+            "url": "https://meowrhino.neocities.org/",
+            "sup": "archive"
           }
         ]
-      }
-    ]
-  },
-  {
-    "category": "cambiar la url a meowrhinoClouds",
-    "projects": [
+      },
       {
         "title": "profilePics",
         "links": [
@@ -235,7 +240,7 @@
     ]
   },
   {
-    "category": "still not finished apps",
+    "category": "unfinished apps",
     "projects": [
       {
         "title": "plantitas",
