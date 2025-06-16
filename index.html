@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +14,7 @@
 
   <script src="https://unpkg.com/paper"></script>
 </head>
+
 <body>
   <!-- Canvas para dibujar nubes -->
   <canvas id="canvas-nubes"></canvas>
@@ -25,16 +27,30 @@
   <button id="shuffle" class="btn-plain">mix</button>
 
   <!-- Panel de selección de tema/paleta -->
-  <div id="theme-panel" class="hidden">
-    <h3>Selecciona Tema</h3>
-    <select id="theme-select"></select>
-    <h4>Personaliza Colores</h4>
-    <div id="color-pickers"></div>
-    <button id="apply-theme" class="btn-plain">Aplicar</button>
+
+  <div id="theme-panel" class="theme-panel hidden">
+    <header class="theme-panel__header">
+      <h3 class="theme-panel__title">Personaliza Tema</h3>
+      <button id="close-fun" class="theme-panel__close">&times;</button>
+    </header>
+
+    <div class="theme-panel__body">
+         <label for="theme-select" class="theme-panel__label">Selecciona Tema</label>
+    <div class="select-wrapper">
+      <select id="theme-select" class="theme-select"></select>
+    </div>
+
+      <fieldset id="color-pickers" class="color-pickers">
+        <legend class="color-pickers__legend">Ajusta tus colores</legend>
+        <!-- ¡VACÍO! 4 pickers se inyectarán vía JavaScript -->
+      </fieldset>
+
+      <button id="apply-theme" class="btn-apply">Aplicar</button>
+    </div>
   </div>
 
   <!-- Lógica principal y switcher de tema -->
-  <script src="scripts/main.js"></script>
-  <script src="scripts/themeSwitcher.js"></script>
+  <script defer src="scripts/main.js"></script>
 </body>
+
 </html>

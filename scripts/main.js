@@ -16,10 +16,17 @@ window.addEventListener("DOMContentLoaded", async () => {
   const canvas = document.getElementById("canvas-nubes");
   const container = document.querySelector(".container--content");
   const btnOpen = document.getElementById("open-fun");
+  const btnMix = document.getElementById("shuffle");
   const panelTheme = document.getElementById("theme-panel");
   const selTheme = document.getElementById("theme-select");
   const divPickers = document.getElementById("color-pickers");
   const btnApply = document.getElementById("apply-theme");
+
+  const btnClose = document.getElementById("close-fun");
+
+  btnClose.addEventListener("click", () => {
+    panelTheme.classList.add("hidden");
+  });
 
   // Número de nubes por defecto
   NUM_NUBES = NUM_NUBES_DEFAULT;
@@ -161,27 +168,24 @@ window.addEventListener("DOMContentLoaded", async () => {
     const cssVars = Array.from(document.styleSheets)
       .flatMap((sheet) => {
         try {
-          // Si no da error, devolvemos sus reglas
           return Array.from(sheet.cssRules);
-        } catch (e) {
-          // Si hay error CORS, ignoramos este sheet
+        } catch {
           return [];
         }
       })
-      // Nos quedamos solo con la regla :root
       .filter((rule) => rule.selectorText === ":root")
-      // Aplanamos todas las propiedades CSS de esa regla
       .flatMap((rule) => [...rule.style])
-      // Filtramos las que sean theme-*-color-1
-      .filter((name) => name.startsWith("theme-") && name.endsWith("-color-1"))
-      // Quitamos el sufijo para quedarnos con el prefijo de tema
-      .map((name) => name.replace("-color-1", ""));
+      // ahora sí: todas las vars que acaben en "-color-1"
+      .filter((name) => name.endsWith("-color-1"))
+      // quitamos el "--" inicial y el sufijo "-color-1"
+      .map((name) => name.replace(/^--/, "").replace(/-color-1$/, ""));
 
     // 2) Llenamos el <select> con cada tema detectado
+    selTheme.innerHTML = "";
     cssVars.forEach((prefijo) => {
       const option = document.createElement("option");
-      option.value = prefijo;
-      option.textContent = prefijo.replace("theme-", "");
+      option.value = prefijo; // ej. "original"
+      option.textContent = prefijo; // ej. "original"
       selTheme.appendChild(option);
     });
 
@@ -196,33 +200,31 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     // 4) Luego añadimos tu listener normal de “change” para el usuario
     selTheme.addEventListener("change", () => {
-      divPickers.innerHTML = ""; // limpiamos viejos pickers
-      const pref = selTheme.value; // p.ej. "theme-monochrome"
+      divPickers.innerHTML = ""; // limpia antiguas
+      const pref = selTheme.value; // e.g. "autumnWinter"
+      const labels = ["Primario", "Secundario", "Terciario", "Acento"];
 
-      [1, 2, 3, 4].forEach((i) => {
+      [1, 2, 3, 4].forEach((i, idx) => {
         const varName = `--${pref}-color-${i}`;
-
-        // 1) Leemos el valor actual del tema, validamos o usamos blanco por defecto
         let raw = getComputedStyle(document.documentElement)
           .getPropertyValue(varName)
           .trim();
         const safe = /^#([0-9A-F]{6})$/i.test(raw) ? raw : "#ffffff";
 
-        // 2) Montamos el picker con un value seguro
         const pickerWrap = document.createElement("div");
+        pickerWrap.className = "color-picker";
         pickerWrap.innerHTML = `
-  <label>
-    ${varName}
-    <input 
-      type="color" 
-      data-var="--color-${i}" 
-      data-theme-var="${varName}"
-      value="${safe}"
-    />
-  </label>
-`;
+      <label class="color-picker__label">${labels[idx]}</label>
+      <input 
+        type="color" 
+        class="color-picker__input"
+        data-var="--color-${i}" 
+        data-theme-var="${varName}"
+        value="${safe}"
+      />
+    `;
         divPickers.appendChild(pickerWrap);
-      }); // <-- aquí cerramos el forEach
+      });
     }); // <-- y aquí cerramos el callback de 'change'
 
     // 4) Al hacer click en "Aplicar", reasignamos variables y overrides
@@ -258,13 +260,19 @@ window.addEventListener("DOMContentLoaded", async () => {
         selTheme.dispatchEvent(new Event("change"));
       }
     });
+
+    btnMix.addEventListener("click", () => {
+      // Si quisieras mezclar también el número de nubes:
+      // NUM_NUBES = algún valor dinámico o sigue con el default
+      render();
+    });
   }
 
   // --- Inicialización ---
   // --- Inicialización ---
-// --- Inicialización ---
-initThemeSwitcher();
-// ya no necesitas volver a forzar el dispatch/change aquí
-// porque lo haces dentro de initThemeSwitcher
-render();
+  // --- Inicialización ---
+  initThemeSwitcher();
+  // ya no necesitas volver a forzar el dispatch/change aquí
+  // porque lo haces dentro de initThemeSwitcher
+  render();
 });
