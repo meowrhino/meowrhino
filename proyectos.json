@@ -316,6 +316,26 @@
             "sup": "test"
           }
         ]
+      },
+      {
+        "title": "las xordxs",
+        "links": [
+          {
+            "title": "link",
+            "url": "https://meowrhino.github.io/jordiyordiyordyiordi/",
+            "sup": ""
+          }
+        ]
+      },
+      {
+        "title": "directorioLD",
+        "links": [
+          {
+            "title": "deprecated",
+            "url": "https://meowrhino.github.io/directorio/",
+            "sup": ""
+          }
+        ]
       }
     ]
   },
@@ -412,31 +432,6 @@
           }
         ]
       },
-      {
-        "title": "las xordxs",
-        "links": [
-          {
-            "title": "link",
-            "url": "https://meowrhino.github.io/jordiyordiyordyiordi/",
-            "sup": ""
-          }
-        ]
-      },
-      {
-        "title": "directorioLD",
-        "links": [
-          {
-            "title": "deprecated",
-            "url": "https://meowrhino.github.io/directorio/",
-            "sup": ""
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "category": "misc2",
-    "projects": [
       {
         "title": "bichi",
         "links": [
