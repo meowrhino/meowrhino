@@ -1,7 +1,13 @@
 // scripts/main.js
 window.addEventListener("DOMContentLoaded", async () => {
   // 1) Cargo proyectos y el placeholder
-  const proyectos = await fetch("proyectos.json").then((r) => r.json());
+  const [proyectos, visibility] = await Promise.all([
+    fetch("proyectos.json").then((r) => r.json()),
+    fetch("visibility.json").then((r) => r.json()),
+  ]);
+  // Creamos un mapa para buscar rápido por category
+  const visMap = new Map(visibility.categories.map((c) => [c.category, c]));
+
   const app = document.getElementById("app");
 
   // 2) Parámetros globales
@@ -20,45 +26,46 @@ window.addEventListener("DOMContentLoaded", async () => {
       .map(([x, y]) => [parseFloat(x) / 100, parseFloat(y) / 100]);
   })();
 
-  // 3) Creo secciones dinámicas
-  proyectos.forEach((cat, idx) => {
-    const slug = cat.category
-      .toLowerCase()
-      .replace(/\s+/g, "_")
-      .replace(/[^a-z0-9_]/g, "");
-    // sección
-    const sec = document.createElement("section");
-    sec.className = `category-section category-${slug}`;
-    sec.dataset.index = idx;
-    sec.style.cssText = "position:relative;width:100%;height:100vh;";
-    // canvas
-    const canvas = document.createElement("canvas");
-    canvas.className = "canvas-nubes";
-    Object.assign(canvas.style, {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-    });
-    sec.appendChild(canvas);
-    // contenedor de labels
-    const cont = document.createElement("div");
-    cont.className = "container--content";
-    Object.assign(cont.style, {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      pointerEvents: "none",
-    });
-    sec.appendChild(cont);
-    app.appendChild(sec);
-  });
+  // // 3) Creo secciones dinámicas
+  // proyectos.forEach((cat, idx) => {
+  //   const slug = cat.category
+  //     .toLowerCase()
+  //     .replace(/\s+/g, "_")
+  //     .replace(/[^a-z0-9_]/g, "");
+  //   // sección
+  //   const sec = document.createElement("section");
+  //   sec.className = `category-section category-${slug}`;
+  //   sec.dataset.index = idx;
+  //   sec.style.cssText = "position:relative;width:100%;height:100vh;";
+  //   // canvas
+  //   const canvas = document.createElement("canvas");
+  //   canvas.className = "canvas-nubes";
+  //   Object.assign(canvas.style, {
+  //     position: "absolute",
+  //     top: 0,
+  //     left: 0,
+  //     width: "100%",
+  //     height: "100%",
+  //   });
+  //   sec.appendChild(canvas);
+  //   // contenedor de labels
+  //   const cont = document.createElement("div");
+  //   cont.className = "container--content";
+  //   Object.assign(cont.style, {
+  //     position: "absolute",
+  //     top: 0,
+  //     left: 0,
+  //     width: "100%",
+  //     height: "100%",
+  //     pointerEvents: "none",
+  //   });
+  //   sec.appendChild(cont);
+  //   app.appendChild(sec);
+  // });
 
   // 4) Función que, dada una sección, la inicializa
-  function initSection(section, proyectosCat) {
+  //    catScale viene de visibility.json; default = 1 para compatibilidad
+  function initSection(section, proyectosCat, catScale = 1) {
     const canvas = section.querySelector(".canvas-nubes");
     const container = section.querySelector(".container--content");
     const scope = new paper.PaperScope();
@@ -73,18 +80,26 @@ window.addEventListener("DOMContentLoaded", async () => {
     }
     window.addEventListener("resize", resize);
     resize();
-    
+
     function generaSemillas() {
       const maxW = BASE_SIZE * MAX_SCALE;
       const maxH = maxW * (10 / 16);
       const marginX = maxW / 2;
       const marginY = maxH / 2;
-      return proyectosCat.map((p) => ({
-        x: marginX + Math.random() * (canvas.width - 2 * marginX),
-        y: marginY + Math.random() * (canvas.height - 2 * marginY),
-        scale: MIN_SCALE + Math.random() * (MAX_SCALE - MIN_SCALE),
-        proyecto: p,
-      }));
+
+      return proyectosCat.map((p) => {
+        // escala base aleatoria
+        const baseRnd = MIN_SCALE + Math.random() * (MAX_SCALE - MIN_SCALE);
+        // le aplicamos el catScale que pasaste a initSection
+        const scale = baseRnd * catScale;
+
+        return {
+          x: marginX + Math.random() * (canvas.width - 2 * marginX),
+          y: marginY + Math.random() * (canvas.height - 2 * marginY),
+          scale,
+          proyecto: p,
+        };
+      });
     }
 
     function dibujaNubes(semillas) {
@@ -150,10 +165,48 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   // 5) Inicializo todas las secciones
   proyectos.forEach((cat, idx) => {
-    const sec = document.querySelector(
-      `.category-section[data-index="${idx}"]`
-    );
-    initSection(sec, cat.projects);
+    // 1) comprobamos visibilidad/escala
+    const catSettings = visMap.get(cat.category) || { visible: true, scale: 1 };
+    if (!catSettings.visible) return; // saltamos si está oculto
+
+    // 2) creamos sección, canvas y container
+    const slug = cat.category
+      .toLowerCase()
+      .replace(/\s+/g, "_")
+      .replace(/[^a-z0-9_]/g, "");
+    const section = document.createElement("section");
+    section.className = `category-section category-${slug}`;
+    section.dataset.index = idx;
+    section.style.cssText = "position:relative;width:100%;height:100vh;";
+
+    const canvas = document.createElement("canvas");
+    canvas.className = "canvas-nubes";
+    Object.assign(canvas.style, {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+    });
+    section.appendChild(canvas);
+
+    const container = document.createElement("div");
+    container.className = "container--content";
+    Object.assign(container.style, {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      pointerEvents: "none",
+    });
+    section.appendChild(container);
+
+    // 3) lo insertamos en el DOM
+    app.appendChild(section);
+
+    // 4) e inicializamos Paper.js pasando la escala
+    initSection(section, cat.projects, catSettings.scale);
   });
 
   // 6) Theme‐switcher y botones (igual que antes)
