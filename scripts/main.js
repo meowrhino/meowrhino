@@ -1,278 +1,161 @@
+// scripts/main.js
 window.addEventListener("DOMContentLoaded", async () => {
-  // Parámetros de generación
-  const TOTAL_HEIGHT_VH = 500;
-  const NUM_NUBES_DEFAULT = 25;
-  let NUM_NUBES;
+  // 1) Cargo proyectos y el placeholder
+  const proyectos = await fetch("proyectos.json").then((r) => r.json());
+  const app = document.getElementById("app");
 
-  // Detectamos móvil por anchura
+  // 2) Parámetros globales
   const isMobile = window.innerWidth <= 600;
-
-  // Tamaño base de la nube (px) y escala según dispositivo
-  const BASE_SIZE_PX = isMobile ? 150 : 200; // nube más pequeña en móvil
+  const BASE_SIZE = isMobile ? 150 : 200;
   const MIN_SCALE = isMobile ? 0.4 : 0.6;
   const MAX_SCALE = isMobile ? 1.2 : 2.0;
-
-  // Referencias DOM
-  const canvas = document.getElementById("canvas-nubes");
-  const container = document.querySelector(".container--content");
-  const btnOpen = document.getElementById("open-fun");
-  const btnMix = document.getElementById("shuffle");
-  const panelTheme = document.getElementById("theme-panel");
-  const selTheme = document.getElementById("theme-select");
-  const divPickers = document.getElementById("color-pickers");
-  const btnApply = document.getElementById("apply-theme");
-
-  const btnClose = document.getElementById("close-fun");
-
-  btnClose.addEventListener("click", () => {
-    panelTheme.classList.add("hidden");
-  });
-
-  // Número de nubes por defecto
-  NUM_NUBES = NUM_NUBES_DEFAULT;
-
-  // Carga datos de proyectos
-  const proyectos = await fetch("proyectos.json").then((r) => r.json());
-
-  // Al principio de main.js
-  let resizeTimer;
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      render(); // o location.reload();
-    }, 300);
-  });
-
-  // --- Helper: extrae coords normalizadas de CSS --nube ---
-  function getNubeCoords() {
-    const nubeCSS = getComputedStyle(document.documentElement)
+  const nubeCoords = (() => {
+    const raw = getComputedStyle(document.documentElement)
       .getPropertyValue("--nube")
       .trim();
-    return nubeCSS
+    return raw
       .replace(/^polygon\(|\)$/g, "")
       .split(",")
       .map((pt) => pt.trim().split(" "))
-      .map(([xs, ys]) => [parseFloat(xs) / 100, parseFloat(ys) / 100]);
-  }
-  const nubeCoords = getNubeCoords();
+      .map(([x, y]) => [parseFloat(x) / 100, parseFloat(y) / 100]);
+  })();
 
-  // --- Inicializa canvas de Paper.js y ajuste en resize ---
-  paper.setup(canvas);
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight * (TOTAL_HEIGHT_VH / 100);
-    paper.view.viewSize = new paper.Size(canvas.width, canvas.height);
-  }
-  window.addEventListener("resize", resizeCanvas);
-  resizeCanvas();
-
-  // --- Genera semillas aleatorias con escala y proyecto asociado ---
-  function generaSemillas() {
-    return Array.from({ length: NUM_NUBES }, (_, i) => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      scale: MIN_SCALE + Math.random() * (MAX_SCALE - MIN_SCALE),
-      proyecto: proyectos[i % proyectos.length],
-    }));
-  }
-
-  // --- Dibuja nubes y unifica intersecciones ---
-  function dibujaNubes(semillas) {
-    paper.project.activeLayer.removeChildren();
-
-    // Para cada semilla, creamos su path
-    const paths = semillas.map((s) => {
-      const path = new paper.Path();
-      // anchura y altura reales de esta nube
-      const width = BASE_SIZE_PX * s.scale;
-      const height = width * (10 / 16);
-
-      nubeCoords.forEach(([px, py], i) => {
-        // trasladamos el polígono para que gire alrededor de (s.x, s.y)
-        // normalizamos px,py en [0,1] → luego restamos 0.5 para centrar
-        const pxAbs = s.x + (px - 0.5) * width;
-        const pyAbs = s.y + (py - 0.5) * height;
-        if (i === 0) path.moveTo(pxAbs, pyAbs);
-        else path.lineTo(pxAbs, pyAbs);
-      });
-      path.closed = true;
-      // Obtener colores de CSS con fallback para no asignar ""
-      const fill =
-        getComputedStyle(document.documentElement)
-          .getPropertyValue("--color-2")
-          .trim() || "#ffffff";
-      const stroke =
-        getComputedStyle(document.documentElement)
-          .getPropertyValue("--color-3")
-          .trim() || "#000000";
-      path.fillColor = fill;
-      path.strokeColor = stroke;
-      path.strokeWidth = 6;
-      return path;
+  // 3) Creo secciones dinámicas
+  proyectos.forEach((cat, idx) => {
+    const slug = cat.category
+      .toLowerCase()
+      .replace(/\s+/g, "_")
+      .replace(/[^a-z0-9_]/g, "");
+    // sección
+    const sec = document.createElement("section");
+    sec.className = `category-section category-${slug}`;
+    sec.dataset.index = idx;
+    sec.style.cssText = "position:relative;width:100%;height:100vh;";
+    // canvas
+    const canvas = document.createElement("canvas");
+    canvas.className = "canvas-nubes";
+    Object.assign(canvas.style, {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
     });
+    sec.appendChild(canvas);
+    // contenedor de labels
+    const cont = document.createElement("div");
+    cont.className = "container--content";
+    Object.assign(cont.style, {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      pointerEvents: "none",
+    });
+    sec.appendChild(cont);
+    app.appendChild(sec);
+  });
 
-    // Unir solapamientos para super-nubes
-    const usados = Array(paths.length).fill(false);
-    const fusionados = [];
-    for (let i = 0; i < paths.length; i++) {
-      if (usados[i]) continue;
-      let cur = paths[i];
-      for (let j = i + 1; j < paths.length; j++) {
-        if (usados[j]) continue;
-        if (cur.bounds.intersects(paths[j].bounds)) {
-          cur = cur.unite(paths[j]);
-          paths[j].remove();
-          usados[j] = true;
-        }
-      }
-      fusionados.push(cur);
-      usados[i] = true;
+  // 4) Función que, dada una sección, la inicializa
+  function initSection(section, proyectosCat) {
+    const canvas = section.querySelector(".canvas-nubes");
+    const container = section.querySelector(".container--content");
+    const scope = new paper.PaperScope();
+    scope.setup(canvas);
+
+    function resize() {
+      const w = section.clientWidth;
+      const h = section.clientHeight;
+      canvas.width = w;
+      canvas.height = h;
+      scope.view.viewSize = new scope.Size(w, h);
     }
-    paper.view.update();
-  }
+    window.addEventListener("resize", resize);
+    resize();
+    
+    function generaSemillas() {
+      const maxW = BASE_SIZE * MAX_SCALE;
+      const maxH = maxW * (10 / 16);
+      const marginX = maxW / 2;
+      const marginY = maxH / 2;
+      return proyectosCat.map((p) => ({
+        x: marginX + Math.random() * (canvas.width - 2 * marginX),
+        y: marginY + Math.random() * (canvas.height - 2 * marginY),
+        scale: MIN_SCALE + Math.random() * (MAX_SCALE - MIN_SCALE),
+        proyecto: p,
+      }));
+    }
 
-  // --- Coloca etiquetas centradas en cada semilla ---
-  function pintaLabels(semillas) {
-    container.innerHTML = "";
-    semillas.forEach((s) => {
-      const div = document.createElement("div");
-      div.className = "label";
-      div.style.left = `${s.x}px`;
-      div.style.top = `${s.y}px`;
-      const texto = s.proyecto.name || s.proyecto.titulo || "Sin nombre";
-      if (s.proyecto.links?.length) {
-        const a = document.createElement("a");
-        a.href = s.proyecto.links[0];
-        a.target = "_blank";
-        a.textContent = texto;
-        div.appendChild(a);
-      } else {
-        div.textContent = texto;
-      }
-      container.appendChild(div);
-    });
-  }
-
-  // --- Render completo: nubes + labels ---
-  function render() {
-    const semillas = generaSemillas();
-    dibujaNubes(semillas);
-    pintaLabels(semillas);
-  }
-
-  // --- Theme switcher: lista de paletas en :root ---
-  // --- Theme switcher: lista de paletas en :root ---
-  function initThemeSwitcher() {
-    // 1) Buscamos todas las variables de tema en :root
-    //    Protegemos el acceso a cssRules con try/catch para evitar SecurityError.
-    const cssVars = Array.from(document.styleSheets)
-      .flatMap((sheet) => {
-        try {
-          return Array.from(sheet.cssRules);
-        } catch {
-          return [];
+    function dibujaNubes(semillas) {
+      scope.project.activeLayer.removeChildren();
+      const paths = semillas.map((s) => {
+        const path = new scope.Path();
+        const w = BASE_SIZE * s.scale;
+        const h = w * (10 / 16);
+        nubeCoords.forEach(([px, py], i) => {
+          const x = s.x + (px - 0.5) * w;
+          const y = s.y + (py - 0.5) * h;
+          i === 0 ? path.moveTo(x, y) : path.lineTo(x, y);
+        });
+        path.closed = true;
+        const st = getComputedStyle(document.documentElement);
+        path.fillColor = st.getPropertyValue("--color-2").trim() || "#fff";
+        path.strokeColor = st.getPropertyValue("--color-3").trim() || "#000";
+        path.strokeWidth = 6;
+        return path;
+      });
+      // fusionar
+      for (let i = 0; i < paths.length; i++) {
+        for (let j = i + 1; j < paths.length; j++) {
+          if (paths[i] && paths[i].bounds.intersects(paths[j].bounds)) {
+            paths[i] = paths[i].unite(paths[j]);
+            paths[j].remove();
+          }
         }
-      })
-      .filter((rule) => rule.selectorText === ":root")
-      .flatMap((rule) => [...rule.style])
-      // ahora sí: todas las vars que acaben en "-color-1"
-      .filter((name) => name.endsWith("-color-1"))
-      // quitamos el "--" inicial y el sufijo "-color-1"
-      .map((name) => name.replace(/^--/, "").replace(/-color-1$/, ""));
-
-    // 2) Llenamos el <select> con cada tema detectado
-    selTheme.innerHTML = "";
-    cssVars.forEach((prefijo) => {
-      const option = document.createElement("option");
-      option.value = prefijo; // ej. "original"
-      option.textContent = prefijo; // ej. "original"
-      selTheme.appendChild(option);
-    });
-
-    // 1) Seleccionamos la primera paleta automáticamente
-    selTheme.selectedIndex = 0;
-
-    // 2) Disparamos el cambio para que cree los pickers
-    selTheme.dispatchEvent(new Event("change"));
-
-    // 3) (Opcional) Aplicamos directamente los colores base de esa paleta
-    btnApply.click();
-
-    // 4) Luego añadimos tu listener normal de “change” para el usuario
-    selTheme.addEventListener("change", () => {
-      divPickers.innerHTML = ""; // limpia antiguas
-      const pref = selTheme.value; // e.g. "autumnWinter"
-      const labels = ["Primario", "Secundario", "Terciario", "Acento"];
-
-      [1, 2, 3, 4].forEach((i, idx) => {
-        const varName = `--${pref}-color-${i}`;
-        let raw = getComputedStyle(document.documentElement)
-          .getPropertyValue(varName)
-          .trim();
-        const safe = /^#([0-9A-F]{6})$/i.test(raw) ? raw : "#ffffff";
-
-        const pickerWrap = document.createElement("div");
-        pickerWrap.className = "color-picker";
-        pickerWrap.innerHTML = `
-      <label class="color-picker__label">${labels[idx]}</label>
-      <input 
-        type="color" 
-        class="color-picker__input"
-        data-var="--color-${i}" 
-        data-theme-var="${varName}"
-        value="${safe}"
-      />
-    `;
-        divPickers.appendChild(pickerWrap);
-      });
-    }); // <-- y aquí cerramos el callback de 'change'
-
-    // 4) Al hacer click en "Aplicar", reasignamos variables y overrides
-    btnApply.addEventListener("click", () => {
-      const pref = selTheme.value;
-
-      // 4.1) Reasignamos los 4 colores base del tema
-      [1, 2, 3, 4].forEach((i) => {
-        const themeVar = `--${pref}-color-${i}`; // variable origen
-        const targetVar = `--color-${i}`; // variable activa
-        const val = getComputedStyle(document.documentElement)
-          .getPropertyValue(themeVar)
-          .trim();
-        document.documentElement.style.setProperty(targetVar, val);
-      });
-
-      // 4.2) Aplicamos overrides de cada picker
-      divPickers.querySelectorAll("input[type=color]").forEach((input) => {
-        // data-var = "--color-i", data-theme-var = "--theme-...-color-i"
-        const tv = input.dataset["targetVar"] || input.dataset["var"];
-        document.documentElement.style.setProperty(tv, input.value);
-      });
-
-      // 4.3) Re-renderiza para ver los cambios
-      render();
-    });
-
-    // 5) Botón "Open Fun" muestra/oculta el panel
-    btnOpen.addEventListener("click", () => {
-      panelTheme.classList.toggle("hidden");
-      // Si lo mostramos, disparamos 'change' para cargar pickers
-      if (!panelTheme.classList.contains("hidden")) {
-        selTheme.dispatchEvent(new Event("change"));
       }
-    });
+      scope.view.update();
+    }
 
-    btnMix.addEventListener("click", () => {
-      // Si quisieras mezclar también el número de nubes:
-      // NUM_NUBES = algún valor dinámico o sigue con el default
-      render();
-    });
+    function pintaLabels(semillas) {
+      container.innerHTML = "";
+      semillas.forEach((s) => {
+        const d = document.createElement("div");
+        d.className = "label";
+        d.style.cssText = "position:absolute;pointer-events:auto;";
+        d.style.left = `${s.x}px`;
+        d.style.top = `${s.y}px`;
+        if (s.proyecto.links?.length) {
+          const a = document.createElement("a");
+          a.href = s.proyecto.links[0].url;
+          a.target = "_blank";
+          a.textContent = s.proyecto.title;
+          d.appendChild(a);
+        } else {
+          d.textContent = s.proyecto.title;
+        }
+        container.appendChild(d);
+      });
+    }
+
+    function renderSection() {
+      const semillas = generaSemillas();
+      dibujaNubes(semillas);
+      pintaLabels(semillas);
+    }
+
+    renderSection();
+    return renderSection;
   }
 
-  // --- Inicialización ---
-  // --- Inicialización ---
-  // --- Inicialización ---
+  // 5) Inicializo todas las secciones
+  proyectos.forEach((cat, idx) => {
+    const sec = document.querySelector(
+      `.category-section[data-index="${idx}"]`
+    );
+    initSection(sec, cat.projects);
+  });
+
+  // 6) Theme‐switcher y botones (igual que antes)
   initThemeSwitcher();
-  // ya no necesitas volver a forzar el dispatch/change aquí
-  // porque lo haces dentro de initThemeSwitcher
-  render();
 });
