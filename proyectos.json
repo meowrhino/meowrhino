@@ -12,15 +12,15 @@
     ]
   },
   {
-    "name": "atalanta library",
+    "name": "e3000",
     "links": [
-      "https://meowrhino.github.io/atalanta/"
+      "https://meowrhino.github.io/e300/"
     ]
   },
   {
-    "name": "berta esteve",
+    "name": "atalanta library",
     "links": [
-      "https://meowrhino.github.io/snerta/"
+      "https://meowrhino.github.io/atalanta/"
     ]
   },
   {
@@ -30,16 +30,9 @@
     ]
   },
   {
-    "name": "meowrhino",
+    "name": "berta esteve",
     "links": [
-      "https://meowrhino.github.io/meowrhino/"
-    ]
-  },
-  {
-    "name": "masajes",
-    "links": [
-      "https://meowrhino.github.io/rikamichie/",
-      "https://meowrhino.github.io/rikamichiev0/"
+      "https://meowrhino.github.io/snerta/"
     ]
   },
   {
@@ -49,15 +42,100 @@
     ]
   },
   {
-    "name": "e3000",
+    "name": "rikamichi",
     "links": [
-      "https://meowrhino.github.io/e300/"
+      "https://meowrhino.github.io/rikamichie/",
+      "https://meowrhino.github.io/rikamichiev0/"
     ]
   },
   {
-    "name": "trigramaTEST",
+    "name": "meowrhino",
     "links": [
+      "https://meowrhino.github.io/meowrhino/",
+      "https://meowrhino.github.io/meowrhinoSpace/",
+      "https://meowrhino.neocities.org/"
+    ]
+  },
+  {
+    "name": "profilePics",
+    "links": [
+      "https://meowrhino.github.io/profilePics/"
+    ]
+  },
+  {
+    "name": "iching",
+    "links": [
+      "https://meowrhino.github.io/8guamusic1",
+      "https://meowrhino.github.io/8guafuture1/",
       "https://meowrhino.github.io/trigrama/"
+    ]
+  },
+  {
+    "name": "joc de la vida",
+    "links": [
+      "https://meowrhino.github.io/gameOfLife/"
+    ]
+  },
+  {
+    "name": "IGN",
+    "links": [
+      "https://meowrhino.github.io/instagramNameGenerator/"
+    ]
+  },
+  {
+    "name": "write",
+    "links": [
+      "https://meowrhino.github.io/writingapp/"
+    ]
+  },
+  {
+    "name": "barcelona per eixample",
+    "links": [
+      "barcelona.html"
+    ]
+  },
+  {
+    "name": "festa",
+    "links": [
+      "lafesta_old.html",
+      "lafesta.html"
+    ]
+  },
+  {
+    "name": "minesweeper",
+    "links": [
+      "https://meowrhino.github.io/etchASketch/"
+    ]
+  },
+  {
+    "name": "rockPaperScissors",
+    "links": [
+      "https://meowrhino.github.io/rockPaperScissors/"
+    ]
+  },
+  {
+    "name": "mediocre learner",
+    "links": [
+      "https://meowrhino.gitlab.io/mediocre-learner/"
+    ]
+  },
+  {
+    "name": "plantitas",
+    "links": [
+      "https://meowrhino.github.io/inventory/",
+      "https://meowrhino.github.io/inventory/"
+    ]
+  },
+  {
+    "name": "tarifas",
+    "links": [
+      "https://meowrhino.github.io/tarifas/"
+    ]
+  },
+  {
+    "name": "tinnitusRelief",
+    "links": [
+      "https://meowrhino.github.io/tinnitusRelief/"
     ]
   },
   {
@@ -85,119 +163,24 @@
     ]
   },
   {
-    "name": "tinnitusRelief",
-    "links": [
-      "https://meowrhino.github.io/tinnitusRelief/"
-    ]
-  },
-  {
-    "name": "AI",
-    "links": [
-      "https://www.youtube.com/watch?v=S9Nv0K8pjLo&ab_channel=BALMA"
-    ]
-  },
-  {
-    "name": "IGN",
-    "links": [
-      "https://meowrhino.github.io/instagramNameGenerator/"
-    ]
-  },
-  {
-    "name": "notas3",
-    "links": [
-      "https://meowrhino.github.io/notas3/"
-    ]
-  },
-  {
-    "name": "joc de la vida",
-    "links": [
-      "https://meowrhino.github.io/gameOfLife/"
-    ]
-  },
-  {
-    "name": "tarifas",
-    "links": [
-      "https://meowrhino.github.io/tarifas/"
-    ]
-  },
-  {
-    "name": "notas2",
-    "links": [
-      "https://meowrhino.github.io/notas2/"
-    ]
-  },
-  {
-    "name": "las xordxs",
-    "links": [
-      "https://meowrhino.github.io/jordiyordiyordyiordi/"
-    ]
-  },
-  {
-    "name": "minesweeper",
-    "links": [
-      "https://meowrhino.github.io/etchASketch/"
-    ]
-  },
-  {
-    "name": "freewrite",
-    "links": [
-      "https://meowrhino.github.io/writingapp/"
-    ]
-  },
-  {
-    "name": "directorio cosas nuevas",
-    "links": [
-      "https://meowrhino.github.io/directorio/"
-    ]
-  },
-  {
-    "name": "hopeko2",
-    "links": [
-      "https://meowrhino.github.io/hopeko2/"
-    ]
-  },
-  {
-    "name": "hopeko",
-    "links": [
-      "https://meowrhino.github.io/hopeko/"
-    ]
-  },
-  {
     "name": "notas",
     "links": [
+      "https://meowrhino.github.io/notas3/",
+      "https://meowrhino.github.io/notas2/",
       "https://meowrhino.github.io/notas/"
-    ]
-  },
-  {
-    "name": "barcelona per eixample",
-    "links": [
-      "barcelona.html"
-    ]
-  },
-  {
-    "name": "profilePics",
-    "links": [
-      "https://meowrhino.github.io/profilePics/"
-    ]
-  },
-  {
-    "name": "rockPaperScissors",
-    "links": [
-      "https://meowrhino.github.io/rockPaperScissors/"
-    ]
-  },
-  {
-    "name": "festa",
-    "links": [
-      "lafesta_old.html",
-      "lafesta.html"
     ]
   },
   {
     "name": "TFG",
     "links": [
-      "https://meowrhino.cargo.site/tfg",
-      "https://meowrhino.cargo.site/"
+      "https://meowrhino.cargo.site/tfg"
+    ]
+  },
+  {
+    "name": "hopeko",
+    "links": [
+      "https://meowrhino.github.io/hopeko2/",
+      "https://meowrhino.github.io/hopeko/"
     ]
   },
   {
@@ -209,9 +192,165 @@
     ]
   },
   {
+    "name": "login essay",
+    "links": [
+      "https://mega.nz/file/JwZk3IIB#_vWw1ZMt0IV4vBIcd989K7yB7eJTfJriNk5PCnykViQ"
+    ]
+  },
+  {
+    "name": "AI",
+    "links": [
+      "https://www.youtube.com/watch?v=S9Nv0K8pjLo&ab_channel=BALMA"
+    ]
+  },
+  {
+    "name": "las xordxs",
+    "links": [
+      "https://meowrhino.github.io/jordiyordiyordyiordi/"
+    ]
+  },
+  {
+    "name": "directorioLD",
+    "links": [
+      "https://meowrhino.github.io/directorio/"
+    ]
+  },
+  {
     "name": "bichi",
     "links": [
-      "https://meowrhino.neocities.org/about_bichi.html"
+      "https://meowrhino.gitlab.io/bichi/"
+    ]
+  },
+  {
+    "name": "CV01",
+    "links": [
+      "https://meowrhino.neocities.org/projects/cv01/cv_0.png",
+      "https://meowrhino.neocities.org/projects/cv01/cv_1.png",
+      "https://meowrhino.neocities.org/projects/cv01/cv_2.png",
+      "https://mega.nz/#F!dlQWlIJK!f65Tz161WhWqD1TsYVSXTA",
+      "https://youtu.be/F_NGUAMIREI"
+    ]
+  },
+  {
+    "name": "cubito",
+    "links": [
+      "https://mega.nz/#!BswTyShJ!3_w2PiNZnDeKSV2Lpe7MLNbrISanoJcDz9hsUccwof4",
+      "https://mega.nz/#!84g3zYDY!_D2w_dw216gmrz1KQUhw3EobnasxlCbQ3EmcPEP5Yto",
+      "https://meowrhino.neocities.org/projects/cubito/IMG_9318.png",
+      "projects/cubito/Sin tiÌtulo-12.pdf"
+    ]
+  },
+  {
+    "name": "limon",
+    "links": [
+      "https://meowrhino.neocities.org/projects/cubito/IMG_9318.png"
+    ]
+  },
+  {
+    "name": "entierro",
+    "links": [
+      "https://meowrhino.neocities.org/projects/entierro/velatori_2.png",
+      "https://meowrhino.neocities.org/projects/entierro/enterrament_1.png",
+      "https://meowrhino.neocities.org/projects/entierro/enterrament_2.png",
+      "https://meowrhino.neocities.org/projects/entierro/enterrat_1.png",
+      "https://meowrhino.neocities.org/projects/entierro/enterrat_2.png",
+      "https://meowrhino.neocities.org/projects/entierro/Sin tiÌtulo-13.pdf",
+      "https://mega.nz/#!s1YBhCzZ!bCFO8BC2voApKtSAZzMtOhltAi_w0YyEIhZd2agfqys"
+    ]
+  },
+  {
+    "name": "casco",
+    "links": [
+      "https://meowrhino.neocities.org/projects/casco/DSC_0059%20copia2.png",
+      "https://meowrhino.neocities.org/projects/casco/DSC_0072%20copia.jpg",
+      "projects/casco/DSC_0512.jpeg",
+      "https://meowrhino.neocities.org/projects/casco/Casco.pdf"
+    ]
+  },
+  {
+    "name": "jungle",
+    "links": [
+      "https://mega.nz/fm/Q4gBXJYa"
+    ]
+  },
+  {
+    "name": "joyicidios",
+    "links": [
+      "https://meowrhino.neocities.org/projects/joyicidios/Joyicidios_Manuel_Latour1.pdf",
+      "https://meowrhino.neocities.org/projects/joyicidios/Joyicidios_Manuel_Latour2.pdf"
+    ]
+  },
+  {
+    "name": "verdi",
+    "links": [
+      "https://www.figma.com/proto/yQE0i2BeTxN55QMbRtfIMA/verdi-manue-latour?page-id=109%3A10&type=design&node-id=109-11&viewport=102%2C367%2C0.25&t=CFAM2Go2Sb6FfnpI-1&scaling=scale-down&starting-point-node-id=109%3A11&show-proto-sidebar=1&mode=design"
+    ]
+  },
+  {
+    "name": "ASAV",
+    "links": [
+      "projects/ASAV/1.png",
+      "projects/ASAV/2.png",
+      "projects/ASAV/3.png",
+      "projects/ASAV/4.png"
+    ]
+  },
+  {
+    "name": "yamigotchi",
+    "links": [
+      "https://meowrhino.neocities.org/projects/yamigotchi/LATOUR_MANUEL_MEMORIAFINAL.pdf",
+      "https://mega.nz/#!lo5ShIoY!VtHiCccCkk5vApziwP1H3Y2ebebEkZcRJZQumQaq3Q0",
+      "https://latourtilla.hotglue.me/?blanki_cody"
+    ]
+  },
+  {
+    "name": "palomas",
+    "links": [
+      "projects/palomas/0.png",
+      "projects/palomas/1.png",
+      "projects/palomas/2.png",
+      "projects/palomas/3.png",
+      "projects/palomas/4.png",
+      "projects/palomas/5.png"
+    ]
+  },
+  {
+    "name": "paradians",
+    "links": [
+      "https://meowrhino.neocities.org/img/paradians/paradians_01.png",
+      "https://meowrhino.neocities.org/img/paradians/paradians_02.png",
+      "https://meowrhino.neocities.org/img/paradians/paradians_03.png",
+      "https://meowrhino.neocities.org/img/paradians/paradians_04.png",
+      "https://meowrhino.neocities.org/img/paradians/paradians_05.png",
+      "https://meowrhino.neocities.org/img/paradians/paradians_06.png",
+      "https://meowrhino.neocities.org/img/paradians/paradians_07.png",
+      "https://meowrhino.neocities.org/img/paradians/paradians_08.png",
+      "https://meowrhino.neocities.org/img/paradians/paradians_09.png",
+      "https://meowrhino.neocities.org/img/paradians/paradians_10.png",
+      "https://meowrhino.neocities.org/img/paradians/parade_all.png"
+    ]
+  },
+  {
+    "name": "img",
+    "links": [
+      "projects/insta/_.png",
+      "projects/insta/why.png",
+      "projects/insta/barquito.png",
+      "https://mega.nz/file/R9wjlDaJ#n-8pm9jIMkgBDtg8HTmzHCcWTubNJYuR4-vjLT88aD0",
+      "projects/insta/o.png",
+      "https://mega.nz/file/lxQFzZLA#mppVtvYamSo7fndY0VYNUBkx2_VNWi7dsHZYDU1ZzDI",
+      "projects/insta/kiwi2.jpg",
+      "projects/insta/b5_2.png",
+      "https://mega.nz/file/QxI2lbQA#A0DfMmgQjMQvLpuhWPJvGa0GssNyjvMqFMB0rSGUQb0",
+      "https://meowrhino.neocities.org/img/glub.png",
+      "projects/insta/4444.png"
+    ]
+  },
+  {
+    "name": "blogs adolescentes",
+    "links": [
+      "https://aheartthatrescueshearts.blogspot.com/",
+      "https://freefromninepointeight.blogspot.com/"
     ]
   }
 ]
