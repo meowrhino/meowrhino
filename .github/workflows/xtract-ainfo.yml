@@ -9,8 +9,10 @@ jobs:
   scrap:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout repo (dev)
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Instala dependencias Python
         run: pip install requests beautifulsoup4
@@ -81,8 +83,12 @@ jobs:
             git commit -m "Auto: actualiza proyectos.json desde Neocities"
           fi
 
+      - name: Pull & rebase dev
+        run: git pull --rebase origin dev
+
+
       - name: Push
         uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
+          branch: dev
