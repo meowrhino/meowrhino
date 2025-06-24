@@ -247,12 +247,12 @@
         "links": [
           {
             "title": "test",
-            "url": "https://meowrhino.github.io/inventory/",
+            "url": "https://meowrhino.github.io/plantitas/",
             "sup": "inventory"
           },
           {
             "title": "prototype",
-            "url": "https://meowrhino.github.io/inventory/",
+            "url": "https://meowrhino.github.io/latrini/",
             "sup": "guide"
           }
         ]
