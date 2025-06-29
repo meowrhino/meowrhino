@@ -18,10 +18,20 @@
     "category": "side quests",
     "projects": [
       {
+        "title": "hifas studio",
+        "links": [
+          {
+            "title": "link",
+            "url": "https://meowrhino.github.io/anakatana/",
+            "sup": ""
+          }
+        ]
+      },
+      {
         "title": "andrea carilla",
         "links": [
           {
-            "title": "test",
+            "title": "link",
             "url": "https://meowrhino.github.io/andreacarilla/",
             "sup": ""
           }
