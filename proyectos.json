@@ -21,7 +21,7 @@
         "title": "hifas studio",
         "links": [
           {
-            "title": "link",
+            "title": "WIP",
             "url": "https://meowrhino.github.io/anakatana/",
             "sup": ""
           }
@@ -158,6 +158,26 @@
           {
             "title": "link",
             "url": "https://meowrhino.github.io/trigrama/",
+            "sup": ""
+          }
+        ]
+      },
+      {
+        "title": "buddhabrot generator",
+        "links": [
+          {
+            "title": "link",
+            "url": "https://meowrhino.github.io/buddhabrot/",
+            "sup": ""
+          }
+        ]
+      },
+      {
+        "title": "stars generator",
+        "links": [
+          {
+            "title": "link",
+            "url": "https://meowrhino.github.io/randomStars/",
             "sup": ""
           }
         ]
