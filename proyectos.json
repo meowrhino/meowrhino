@@ -68,10 +68,20 @@
         ]
       },
       {
+        "title": "messagePark",
+        "links": [
+          {
+            "title": "alpha",
+            "url": "https://meowrhino.github.io/messagePark/",
+            "sup": ""
+          }
+        ]
+      },
+      {
         "title": "berta esteve",
         "links": [
           {
-            "title": "test",
+            "title": "alpha",
             "url": "https://meowrhino.github.io/snerta/",
             "sup": "WIP"
           }
@@ -91,7 +101,7 @@
         "title": "rikamichie",
         "links": [
           {
-            "title": "WIP",
+            "title": "beta",
             "url": "https://meowrhino.github.io/rikamichie/",
             "sup": ""
           },
