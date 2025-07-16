@@ -18,6 +18,21 @@
     "category": "side quests",
     "projects": [
       {
+        "title": "rikamichie",
+        "links": [
+          {
+            "title": "link",
+            "url": "https://meowrhino.github.io/rikamichie/",
+            "sup": ""
+          },
+          {
+            "title": "old",
+            "url": "https://meowrhino.github.io/rikamichiev0/",
+            "sup": ""
+          }
+        ]
+      },
+      {
         "title": "hifas studio",
         "links": [
           {
@@ -34,6 +49,26 @@
             "title": "link",
             "url": "https://meowrhino.github.io/andreacarilla/",
             "sup": ""
+          }
+        ]
+      },
+      {
+        "title": "villa granota",
+        "links": [
+          {
+            "title": "link",
+            "url": "https://villagranota.github.io/villagranota/",
+            "sup": ""
+          }
+        ]
+      },
+      {
+        "title": "berta esteve",
+        "links": [
+          {
+            "title": "alpha",
+            "url": "https://meowrhino.github.io/snerta/",
+            "sup": "WIP"
           }
         ]
       },
@@ -73,41 +108,6 @@
           {
             "title": "alpha",
             "url": "https://meowrhino.github.io/messagePark/",
-            "sup": ""
-          }
-        ]
-      },
-      {
-        "title": "berta esteve",
-        "links": [
-          {
-            "title": "alpha",
-            "url": "https://meowrhino.github.io/snerta/",
-            "sup": "WIP"
-          }
-        ]
-      },
-      {
-        "title": "villa granota",
-        "links": [
-          {
-            "title": "link",
-            "url": "https://villagranota.github.io/villagranota/",
-            "sup": ""
-          }
-        ]
-      },
-      {
-        "title": "rikamichie",
-        "links": [
-          {
-            "title": "beta",
-            "url": "https://meowrhino.github.io/rikamichie/",
-            "sup": ""
-          },
-          {
-            "title": "tarjeta masajes",
-            "url": "https://meowrhino.github.io/rikamichiev0/",
             "sup": ""
           }
         ]
